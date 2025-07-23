@@ -12,10 +12,9 @@
       --primary: #4361ee;
       --secondary: #f72585;
       --accent: #4cc9f0;
-      --card-width: 430px;
-      --card-height: 320px;
+      --card-size: 340px;  /* square */
       --shadow: 0 8px 30px rgba(67, 97, 238, 0.10);
-      --headline-font: 1.52rem;
+      --headline-font: 1.45rem;
       --border-cut: 2.5px solid #b2b8cf;
     }
     body {
@@ -42,99 +41,111 @@
     .pop-preview {
       display: flex;
       flex-wrap: wrap;
-      gap: 24px;
+      gap: 28px;
       margin: 18px 0 0 0;
       justify-content: center;
       align-items: flex-start;
     }
     .pop-card {
-      width: var(--card-width);
-      height: var(--card-height);
+      width: var(--card-size);
+      height: var(--card-size);
       background: linear-gradient(120deg, #fff 66%, #f3f6ff 100%);
       border-radius: 14px;
       box-shadow: var(--shadow);
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      align-items: center;
       position: relative;
       margin: 0 auto;
       page-break-inside: avoid;
       break-inside: avoid;
-      align-items: center;
       padding: 0;
       border: var(--border-cut);
       box-sizing: border-box;
     }
     .pop-card-header {
-  padding: 10px 8px 0 8px;
-  text-align: center;
-  width: 100%;
-  flex-shrink: 0;
-}
+      width: 100%;
+      text-align: center;
+      padding: 18px 8px 0 8px;
+      flex-shrink: 0;
+    }
     .s-coin-value {
-      font-size: 1.01rem;
+      font-size: 0.99rem;
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 2px;
       letter-spacing: 1px;
+      margin-bottom: 2px;
     }
     .headline {
-  font-size: var(--headline-font);
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 1.1px;
-  background: linear-gradient(90deg, var(--secondary), var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 5px auto 4px auto; /* Add top, reduce bottom margin */
-  padding: 0;
-  width: 100%;
-  line-height: 1.13;
-  display: block;
-}
+      font-size: var(--headline-font);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 8px auto 0px auto;
+      padding: 0;
+      width: 100%;
+      line-height: 1.11;
+      display: block;
+    }
     .pop-card-products {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  width: 100%;
-  min-height: 110px;
-  margin: 0 0 0 0;   /* REMOVE top margin */
-  padding: 0;
-  position: relative;
-  flex: 1 1 auto;
-}
-    /* 1 Product: biggest size, center */
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      width: 100%;
+      flex: 1 1 0;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      /* Center vertically between headline and disclaimer */
+    }
+    .pop-card-footer {
+      width: 100%;
+      text-align: center;
+      padding: 0 8px 14px 8px;
+      flex-shrink: 0;
+    }
+    .disclaimer {
+      font-size: 0.68rem;
+      color: #a7adcc;
+      line-height: 1.15;
+      margin: 12px 0 0 0;
+      width: 100%;
+    }
+    /* Adjust product image sizes for each case */
     .pop-card-products.one .product-img-wrap {
-      width: 165px; height: 165px; margin: 0;
+      width: 140px; height: 140px; margin: 0;
       transform: rotate(0deg);
       z-index: 2;
     }
-    /* 2 Products: large, close, rotated */
     .pop-card-products.two {
-      gap: 10px !important;
+      gap: 9px !important;
     }
     .pop-card-products.two .product-img-wrap {
-      width: 123px; height: 123px; margin: 0;
+      width: 97px; height: 97px; margin: 0;
     }
     .pop-card-products.two .product-img-wrap:nth-child(1) {
-      transform: rotate(-4deg);
+      transform: rotate(-5deg);
       z-index: 2;
     }
     .pop-card-products.two .product-img-wrap:nth-child(2) {
-      transform: rotate(4deg);
+      transform: rotate(5deg);
       z-index: 2;
     }
-    /* 3 Products: medium, tight, slight overlap, rotated */
     .pop-card-products.three {
       gap: 0px !important;
     }
     .pop-card-products.three .product-img-wrap {
-      width: 97px; height: 97px; margin-left: -12px; margin-right: -12px;
+      width: 79px; height: 79px; margin-left: -8px; margin-right: -8px;
     }
     .pop-card-products.three .product-img-wrap:nth-child(1) {
-      transform: rotate(-4deg);
+      transform: rotate(-5deg);
       z-index: 1;
       margin-left: 0;
     }
@@ -143,7 +154,7 @@
       z-index: 2;
     }
     .pop-card-products.three .product-img-wrap:nth-child(3) {
-      transform: rotate(4deg);
+      transform: rotate(5deg);
       z-index: 1;
       margin-right: 0;
     }
@@ -158,7 +169,6 @@
       border: 2px solid #e0e4ff;
       transition: box-shadow .2s, transform .18s;
       overflow: hidden;
-      /* fix aspect and smoothness */
     }
     .product-img-wrap img, .product-img-wrap .placeholder-icon {
       width: 100%;
@@ -181,25 +191,10 @@
       z-index: 5;
       box-shadow: 0 1px 5px rgba(247, 37, 133, 0.13);
     }
-    .pop-card-footer {
-  text-align: center;
-  padding: 2px 6px 10px 6px; /* Add more bottom padding */
-  width: 100%;
-  margin: 0;
-}
     .total-value { display: none !important; }
-    .disclaimer {
-  font-size: 0.66rem;
-  color: #a7adcc;
-  line-height: 1.15;
-  margin-top: 12px;  /* More space above disclaimer */
-  margin-bottom: 0;
-  width: 100%;
-}
+    /* Print: make cards square and fit 2x2 on A4 */
     @media print {
-      body {
-        background: #fff;
-      }
+      body { background: #fff; }
       .input-section, .instructions, header, footer, .print-btn { display: none !important; }
       .pop-preview {
         width: 100vw !important;
@@ -217,10 +212,15 @@
         float: left;
         box-shadow: none !important;
         width: 49vw !important;
-        height: 37vh !important;
+        height: 49vw !important;
         border-radius: 0 !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
       }
       html, body { padding:0; margin:0; }
+    }
+    @media (max-width: 500px) {
+      :root { --card-size: 95vw; }
     }
   </style>
 </head>
@@ -287,7 +287,6 @@
       <p>S-Coin POP Generator &copy; 2023 | Premium Promotion System</p>
     </footer>
   </div>
-
 <script>
 let productList = [];
 let excelLoaded = false;
@@ -312,8 +311,8 @@ function loadExcelData() {
         img: row['URL'] || '',
         price: parseFloat(row['MEMBER']) || 0
       }))
-      .filter(product => 
-        !product.name.toLowerCase().includes('uniq') && 
+      .filter(product =>
+        !product.name.toLowerCase().includes('uniq') &&
         !product.name.toLowerCase().includes('amazingthing') &&
         product.price > 0
       );
@@ -372,7 +371,6 @@ function generatePOP() {
     let bestCombo = [];
     let bestTotal = 0;
     let n = productList.length;
-    // Try all combinations for maxItems (brute force for up to 3 only)
     function tryCombos(arr, combo=[], sum=0, idx=0) {
       if (combo.length === maxItems) {
         if (sum <= val && sum > bestTotal) {
@@ -401,18 +399,15 @@ function generatePOP() {
       }
     }
 
-    // Headline text
     let headlineText = "GET THIS FREE!";
     if (bestCombo.length === 2) headlineText = "GET BOTH FREE!";
     else if (bestCombo.length === 3) headlineText = "GET ALL THESE FREE!";
 
-    // Product row class
     let rowClass = "";
     if (bestCombo.length === 1) rowClass = "one";
     else if (bestCombo.length === 2) rowClass = "two";
     else if (bestCombo.length === 3) rowClass = "three";
 
-    // Product HTML (all equal size, with rotation)
     let productsHTML = bestCombo.map((item) => {
       let imgHtml = item.img ?
         `<img src="${item.img}" alt="${item.name}" onerror="this.onerror=null;this.style.display='none';">`
@@ -420,7 +415,6 @@ function generatePOP() {
       return `<div class="product-img-wrap"><div class="free-badge">FREE</div>${imgHtml}</div>`;
     }).join('');
 
-    // Card HTML
     const card = document.createElement('div');
     card.className = 'pop-card';
     card.innerHTML = `
