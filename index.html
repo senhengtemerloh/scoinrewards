@@ -343,22 +343,6 @@
       background: #fff2f0;
       color: #ff4d4f;
     }
-    .card-counter {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: var(--accent);
-      color: white;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 0.9rem;
-      z-index: 10;
-    }
   </style>
 </head>
 <body>
@@ -498,7 +482,7 @@ function generatePOP() {
     return;
   }
 
-  values.slice(0, 4).forEach((val, index) => {
+  values.slice(0, 4).forEach((val) => {
     // Decide how many products to show
     let maxItems = 1;
     if (val >= 300) maxItems = 3;
@@ -555,7 +539,6 @@ function generatePOP() {
     const card = document.createElement('div');
     card.className = 'pop-card';
     card.innerHTML = `
-      <div class="card-counter">${index+1}</div>
       <div class="pop-card-header">
         <div class="s-coin-value">RM <span style="font-weight:900">${val}</span> S-COIN VALUE</div>
         <div class="headline">${headlineText}</div>
