@@ -6,7 +6,7 @@
   <title>S-Coin POP Generator</title>
   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #4361ee;
@@ -18,9 +18,17 @@
       --card-bg: linear-gradient(145deg, #ffffff, #f0f4ff);
       --text: #2b2d42;
       --light-text: #8d99ae;
+      --border-light: #e0e4ff;
+      --shadow: 0 10px 30px rgba(67, 97, 238, 0.15);
       --card-width: 300px;
       --card-height: 450px;
-      --shadow: 0 10px 30px rgba(67, 97, 238, 0.15);
+      --gap-medium: 20px;
+      --gap-large: 30px;
+      --padding-medium: 20px;
+      --padding-large: 30px;
+      --border-radius-medium: 12px;
+      --border-radius-large: 20px;
+      --transition-speed: 0.3s;
     }
     
     * {
@@ -31,26 +39,25 @@
     
     body {
       font-family: 'Poppins', sans-serif;
-      background: var(--background);
-      padding: 20px;
+      background: linear-gradient(135deg, #f5f7ff 0%, #e6e9ff 100%);
+      padding: var(--padding-medium);
       line-height: 1.6;
       color: var(--text);
       min-height: 100vh;
-      background: linear-gradient(135deg, #f5f7ff 0%, #e6e9ff 100%);
     }
     
     .container {
       max-width: 1300px;
       margin: 0 auto;
-      padding: 20px;
+      padding: var(--padding-medium);
     }
     
     header {
       text-align: center;
       margin-bottom: 40px;
-      padding: 30px 20px;
+      padding: var(--padding-large) var(--padding-medium);
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      border-radius: 20px;
+      border-radius: var(--border-radius-large);
       color: white;
       box-shadow: var(--shadow);
       position: relative;
@@ -91,8 +98,8 @@
     
     .input-section {
       background: white;
-      border-radius: 20px;
-      padding: 30px;
+      border-radius: var(--border-radius-large);
+      padding: var(--padding-large);
       box-shadow: var(--shadow);
       margin-bottom: 40px;
       position: relative;
@@ -126,7 +133,7 @@
     .input-area {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
+      gap: var(--gap-medium);
       margin-bottom: 25px;
     }
     
@@ -153,9 +160,9 @@
     .input-group input {
       padding: 15px 20px;
       font-size: 1.1rem;
-      border: 2px solid #e0e4ff;
-      border-radius: 12px;
-      transition: all 0.3s;
+      border: 2px solid var(--border-light);
+      border-radius: var(--border-radius-medium);
+      transition: all var(--transition-speed);
       background: #f8f9ff;
       font-weight: 500;
       color: var(--text);
@@ -167,6 +174,11 @@
       box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.2);
       background: white;
     }
+
+    .input-group input.invalid {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 4px rgba(247, 37, 133, 0.2);
+    }
     
     .input-group input::placeholder {
       color: #a7adcc;
@@ -175,7 +187,7 @@
     .buttons {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: var(--gap-medium);
       justify-content: center;
       margin-top: 30px;
     }
@@ -185,9 +197,9 @@
       font-size: 1.1rem;
       font-weight: 600;
       border: none;
-      border-radius: 12px;
+      border-radius: var(--border-radius-medium);
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all var(--transition-speed);
       display: flex;
       align-items: center;
       gap: 12px;
@@ -227,8 +239,8 @@
     .pop-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
-      gap: 30px;
-      margin-top: 30px;
+      gap: var(--gap-large);
+      margin-top: var(--gap-large);
       justify-content: center;
     }
     
@@ -305,13 +317,13 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 0 20px 25px;
+      padding: 0 var(--padding-medium) 25px;
     }
     
     .product-grid {
       display: flex;
       flex-direction: column;
-      gap: 25px;
+      gap: 15px; /* Reduced gap for more items */
       margin: 0 auto;
       width: 100%;
     }
@@ -319,12 +331,12 @@
     .product-item {
       background: white;
       border-radius: 15px;
-      padding: 15px;
+      padding: 12px; /* Reduced padding */
       display: flex;
       flex-direction: column;
       align-items: center;
       box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      transition: all 0.3s;
+      transition: all var(--transition-speed);
       border: 1px solid #eef2ff;
     }
     
@@ -334,12 +346,12 @@
     }
     
     .product-img {
-      width: 160px;
-      height: 130px;
+      width: 150px; /* Slightly reduced width */
+      height: 120px; /* Slightly reduced height */
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 15px;
+      margin-bottom: 10px; /* Reduced margin */
       background: #f8f9ff;
       border-radius: 12px;
       overflow: hidden;
@@ -351,7 +363,7 @@
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      transition: transform 0.3s;
+      transition: transform var(--transition-speed);
     }
     
     .product-img:hover img {
@@ -360,22 +372,22 @@
     
     .product-name {
       font-weight: 600;
-      font-size: 1.05rem;
+      font-size: 1rem; /* Slightly reduced font size */
       text-align: center;
-      margin-bottom: 8px;
-      height: 3.6em;
+      margin-bottom: 5px; /* Reduced margin */
+      height: 3.2em; /* Adjusted for 2 lines */
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2; /* Limit to 2 lines */
       -webkit-box-orient: vertical;
-      line-height: 1.3;
+      line-height: 1.6; /* Adjusted line height */
       color: var(--text);
     }
     
     .product-price {
       font-weight: 700;
       color: var(--primary);
-      font-size: 1.3rem;
+      font-size: 1.2rem; /* Slightly reduced font size */
       margin-top: 5px;
       background: rgba(67, 97, 238, 0.1);
       padding: 5px 15px;
@@ -383,9 +395,9 @@
     }
     
     .pop-footer {
-      margin-top: 20px;
-      padding: 20px 15px 0;
-      border-top: 2px dashed #e0e4ff;
+      margin-top: var(--gap-medium);
+      padding: var(--gap-medium) 15px 0;
+      border-top: 2px dashed var(--border-light);
       text-align: center;
     }
     
@@ -409,9 +421,9 @@
       text-align: center;
       padding: 50px 30px;
       background: white;
-      border-radius: 20px;
+      border-radius: var(--border-radius-large);
       box-shadow: var(--shadow);
-      margin: 20px 0;
+      margin: var(--gap-medium) 0;
     }
     
     .empty-state i {
@@ -437,15 +449,15 @@
     
     .instructions {
       background: white;
-      border-radius: 20px;
-      padding: 30px;
+      border-radius: var(--border-radius-large);
+      padding: var(--padding-large);
       box-shadow: var(--shadow);
       margin: 40px 0;
     }
     
     .instructions ul {
       padding-left: 25px;
-      margin: 20px 0;
+      margin: var(--gap-medium) 0;
     }
     
     .instructions li {
@@ -468,12 +480,12 @@
     
     footer {
       text-align: center;
-      padding: 30px 20px;
+      padding: var(--padding-large) var(--padding-medium);
       color: var(--light-text);
       font-size: 1rem;
       margin-top: 50px;
       background: white;
-      border-radius: 20px;
+      border-radius: var(--border-radius-large);
       box-shadow: var(--shadow);
     }
     
@@ -507,6 +519,7 @@
       
       .pop-grid, .pop-grid * {
         visibility: visible;
+        overflow: visible !important; /* Ensure content is not clipped */
       }
       
       .pop-grid {
@@ -514,13 +527,21 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: auto; /* Allow height to adjust based on content */
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        gap: 20px;
+        /* Adjust grid-template-columns to dynamically fit 2 or 4 cards per row */
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 20px; /* Reduced gap for print */
         padding: 15mm;
         box-sizing: border-box;
+      }
+
+      .pop-grid:has(.pop:nth-child(n+3)) { /* If there are 3 or more cards, keep 2 columns */
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pop-grid:not(:has(.pop:nth-child(n+3))) { /* If there are 1 or 2 cards, use 1 column to make them larger */
+        grid-template-columns: 1fr;
       }
       
       .pop {
@@ -529,10 +550,54 @@
         box-shadow: none !important;
         margin: 0;
         transform: none !important;
+        width: 100%; /* Ensure pop takes full width within its grid cell */
+        height: auto; /* Allow height to expand */
+        min-height: 400px; /* Ensure a minimum height for smaller content */
+      }
+
+      .pop-header, .product-container, .pop-footer {
+        padding: 10px; /* Reduced padding for print */
+      }
+
+      .pop h2 {
+        font-size: 1.5rem; /* Smaller font size for print */
+      }
+
+      .headline {
+        font-size: 1.1rem;
+        padding: 5px;
+      }
+
+      .product-item {
+        padding: 8px;
+        border-radius: 10px;
+      }
+
+      .product-img {
+        width: 120px;
+        height: 100px;
+      }
+
+      .product-name {
+        font-size: 0.9rem;
+        -webkit-line-clamp: 3; /* Allow 3 lines on print for longer names */
+      }
+
+      .product-price {
+        font-size: 1rem;
+        padding: 3px 10px;
+      }
+
+      .total {
+        font-size: 1.2rem;
+      }
+
+      .disclaimer {
+        font-size: 0.75rem;
       }
       
-      .btn, .input-section, header, footer, .instructions {
-        display: none;
+      .btn, .input-section, header, footer, .instructions, .status-message {
+        display: none !important; /* Hide status message during print */
       }
       
       @page {
@@ -543,8 +608,8 @@
     
     .status-message {
       text-align: center;
-      padding: 20px;
-      margin: 20px 0;
+      padding: var(--padding-medium);
+      margin: var(--gap-medium) 0;
       border-radius: 15px;
       font-weight: 500;
       font-size: 1.1rem;
@@ -616,22 +681,22 @@
       <div class="input-area">
         <div class="input-group">
           <label for="val1"><i class="fas fa-tag"></i> S-Coin Value 1 (RM)</label>
-          <input type="number" id="val1" placeholder="Enter amount" min="0">
+          <input type="number" id="val1" placeholder="e.g., 100.00" min="0" step="0.01">
         </div>
         
         <div class="input-group">
           <label for="val2"><i class="fas fa-tag"></i> S-Coin Value 2 (RM)</label>
-          <input type="number" id="val2" placeholder="Enter amount" min="0">
+          <input type="number" id="val2" placeholder="e.g., 250.00" min="0" step="0.01">
         </div>
         
         <div class="input-group">
           <label for="val3"><i class="fas fa-tag"></i> S-Coin Value 3 (RM)</label>
-          <input type="number" id="val3" placeholder="Enter amount" min="0">
+          <input type="number" id="val3" placeholder="e.g., 500.00" min="0" step="0.01">
         </div>
         
         <div class="input-group">
           <label for="val4"><i class="fas fa-tag"></i> S-Coin Value 4 (RM)</label>
-          <input type="number" id="val4" placeholder="Enter amount" min="0">
+          <input type="number" id="val4" placeholder="e.g., 1000.00" min="0" step="0.01">
         </div>
       </div>
       
@@ -645,7 +710,7 @@
         </button>
         
         <button class="btn btn-accent" onclick="window.print()">
-          <i class="fas fa-print"></i> Print A4 (4 POP)
+          <i class="fas fa-print"></i> Print (A4 optimized)
         </button>
       </div>
     </section>
@@ -653,12 +718,12 @@
     <section class="instructions">
       <h2 class="section-title"><i class="fas fa-info-circle"></i> How to Use</h2>
       <ul>
-        <li>Enter S-Coin values in RM (e.g., 100, 200, 500) in the input fields</li>
-        <li>Click "Generate POP Cards" to create your Proof of Purchase cards</li>
-        <li>Use "Clear All" to reset all inputs and generated cards</li>
-        <li>Click "Print A4" to print 4 POP cards on a single A4 sheet</li>
-        <li>Each card will show suggested products that fit within the S-Coin value</li>
-        <li>Product data is loaded from the <code>data.xlsx</code> file in the same directory</li>
+        <li>Enter S-Coin values in RM (e.g., 100, 200, 500) in the input fields. You can enter decimal values.</li>
+        <li>Click "**Generate POP Cards**" to create your Proof of Purchase cards.</li>
+        <li>Use "**Clear All**" to reset all inputs and generated cards.</li>
+        <li>Click "**Print (A4 optimized)**" to print your generated POP cards. The layout adjusts for optimal printing on A4 sheets.</li>
+        <li>Each card will show suggested products that fit within the S-Coin value, prioritizing the best value match.</li>
+        <li>Product data is loaded from the `data.xlsx` file in the same directory. If not found, sample data will be used.</li>
       </ul>
     </section>
     
@@ -683,184 +748,289 @@
     // DOM Elements
     const dataStatus = document.getElementById('dataStatus');
     const popGrid = document.getElementById('popGrid');
+    const inputIds = ['val1', 'val2', 'val3', 'val4'];
+    const inputElements = inputIds.map(id => document.getElementById(id));
 
     // Initialize on page load
     window.addEventListener('DOMContentLoaded', () => {
       loadExcelData();
+      // Add event listeners for input formatting
+      inputElements.forEach(input => {
+        input.addEventListener('blur', formatInputToTwoDecimals);
+      });
     });
 
+    // Formats numerical input to two decimal places
+    function formatInputToTwoDecimals(event) {
+      const input = event.target;
+      let value = parseFloat(input.value);
+      if (!isNaN(value)) {
+        input.value = value.toFixed(2);
+        input.classList.remove('invalid'); // Remove invalid state if it becomes valid
+      } else if (input.value !== '') {
+        input.classList.add('invalid'); // Mark as invalid if non-numeric and not empty
+      } else {
+        input.classList.remove('invalid'); // Remove invalid state if cleared
+      }
+    }
+
     // Load product data from Excel file
-    function loadExcelData() {
-      // Try to fetch the data.xlsx file
-      fetch('data.xlsx')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Excel file not found or network error');
-          }
-          return response.arrayBuffer();
-        })
-        .then(buffer => {
-          // Parse Excel data
-          const workbook = XLSX.read(buffer, { type: 'array' });
-          const firstSheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[firstSheetName];
-          
-          // Convert to JSON
-          const jsonData = XLSX.utils.sheet_to_json(worksheet);
-          
-          // Map to product list (FULL NAME, URL, MEMBER)
-          productList = jsonData.map(row => ({
+    async function loadExcelData() {
+      try {
+        const response = await fetch('data.xlsx');
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data.xlsx: ${response.statusText}`);
+        }
+        const buffer = await response.arrayBuffer();
+        
+        const workbook = XLSX.read(buffer, { type: 'array' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        
+        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+        
+        productList = jsonData.map(row => ({
             name: row['FULL NAME'] || 'Unknown Product',
             img: row['URL'] || '',
             price: parseFloat(row['MEMBER']) || 0
           }))
-          // Filter out products with "Uniq" or "AMAZINGthing" in the name
-          .filter(product => 
-            !product.name.includes('Uniq') && 
-            !product.name.includes('AMAZINGthing') &&
+          .filter(product =>
+            // Filter out products with "Uniq" or "AMAZINGthing" in the name (case-insensitive)
+            !/(Uniq|AMAZINGthing)/i.test(product.name) &&
             product.price > 0
-          );
-          
-          // Sort by price descending
-          productList.sort((a, b) => b.price - a.price);
-          
-          // Update UI
-          dataStatus.innerHTML = `<i class="fas fa-check-circle"></i> Loaded ${productList.length} products from Excel file`;
-          dataStatus.className = 'status-message status-success';
-          excelLoaded = true;
-          
-          // Log first product for debugging
-          if (productList.length > 0) {
-            console.log('First product:', productList[0]);
+          )
+          .sort((a, b) => b.price - a.price); // Sort by price descending
+        
+        dataStatus.innerHTML = `<i class="fas fa-check-circle"></i> Loaded ${productList.length} products successfully.`;
+        dataStatus.className = 'status-message status-success';
+        excelLoaded = true;
+      } catch (error) {
+        console.error('Error loading Excel data:', error);
+        dataStatus.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error loading Excel data: ${error.message}. Using sample data.`;
+        dataStatus.className = 'status-message status-error';
+        
+        // Fallback to sample data
+        productList = [
+          { name: 'Tefal Rice Cooker - Premium Edition', price: 499.00, img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Samsung Galaxy Buds Pro', price: 799.00, img: 'https://images.unsplash.com/photo-1610438018440-272ed62d4999?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Philips Air Fryer XL', price: 699.00, img: 'https://images.unsplash.com/photo-1621217730950-891152a5edcf?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Dyson V8 Cordless Vacuum', price: 1299.00, img: 'https://images.unsplash.com/photo-1627916608932-a5e1e1a5f5f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Sony PlayStation 5 Console', price: 2499.00, img: 'https://images.unsplash.com/photo-1606132714278-f75f7e7f6e3c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'HP Spectre x360 Laptop', price: 4999.00, img: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Mini Smart Fan - Portable USB Rechargeable', price: 299.00, img: 'https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Oio Flask - Vacuum Insulated Stainless Steel', price: 399.00, img: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Magnetic Powerbank - 10000mAh', price: 259.00, img: 'https://images.unsplash.com/photo-1606220588911-4561c3e1aafa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Wireless Earbuds - Bluetooth 5.2', price: 199.00, img: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Smart LED Lamp - Color Changing', price: 149.00, img: 'https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Portable Bluetooth Speaker', price: 99.00, img: 'https://images.unsplash.com/photo-1546435770-a3e430bf06d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'USB-C Fast Charger', price: 79.00, img: 'https://images.unsplash.com/photo-1602357731998-f2f2c8d2c3e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Ergonomic Mouse Pad', price: 35.00, img: 'https://images.unsplash.com/photo-1602928815197-2c9c7f6d2e6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Stylish Reusable Water Bottle', price: 45.00, img: 'https://images.unsplash.com/photo-1591047116900-3f4a2b9f6b0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Premium Coffee Mug', price: 25.00, img: 'https://images.unsplash.com/photo-1559868350-13f502421379?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Travel Pillow Set', price: 65.00, img: 'https://images.unsplash.com/photo-1551221434-d89f0745b6f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+          { name: 'Assorted Gourmet Chocolates', price: 55.00, img: 'https://images.unsplash.com/photo-1620302316524-7e0b5d9d7e5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' }
+        ].sort((a, b) => b.price - a.price); // Sort fallback data too
+
+        excelLoaded = true;
+      }
+    }
+
+    /**
+     * Finds the best combination of products to match or be slightly under the target value.
+     * Prioritizes filling up to 3 items.
+     * @param {number} targetValue - The S-Coin value to match.
+     * @returns {Array<Object>} An array of selected products.
+     */
+    function findBestProductCombination(targetValue) {
+      const selectedItems = [];
+      let currentSum = 0;
+      const MAX_ITEMS = 3; // Maximum number of items per POP card
+
+      // Sort productList by price descending to prioritize higher value items
+      // This is already done during load, but re-sorting here for clarity if data changes later
+      const sortedProducts = [...productList].sort((a, b) => b.price - a.price);
+
+      // Attempt to find items that sum up to the target value
+      for (const product of sortedProducts) {
+        if (selectedItems.length < MAX_ITEMS && currentSum + product.price <= targetValue) {
+          selectedItems.push(product);
+          currentSum += product.price;
+        }
+      }
+
+      // If we couldn't fill MAX_ITEMS or get close, try other combinations
+      if (selectedItems.length === 0 || (targetValue - currentSum > 0 && selectedItems.length < MAX_ITEMS)) {
+        selectedItems.length = 0; // Reset
+        currentSum = 0;
+
+        // Try to get a single item that is closest to the target value
+        // or up to MAX_ITEMS if they fit
+        let bestSingleProduct = null;
+        for (const product of sortedProducts) {
+          if (product.price <= targetValue) {
+            if (!bestSingleProduct || (targetValue - product.price < targetValue - bestSingleProduct.price)) {
+                bestSingleProduct = product;
+            }
           }
-        })
-        .catch(error => {
-          console.error('Error loading Excel data:', error);
-          dataStatus.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error loading Excel data: ${error.message}. Using sample data.`;
-          dataStatus.className = 'status-message status-error';
+        }
+
+        if (bestSingleProduct) {
+            selectedItems.push(bestSingleProduct);
+            currentSum = bestSingleProduct.price;
+
+            // If we have room, try to add more smaller items
+            for (const product of sortedProducts) {
+                if (selectedItems.length < MAX_ITEMS && product.price <= (targetValue - currentSum) && !selectedItems.includes(product)) {
+                    selectedItems.push(product);
+                    currentSum += product.price;
+                }
+            }
+        }
+      }
+
+      // Final check: if still empty, or sum is very low, just get the largest item that fits
+      if (selectedItems.length === 0 && sortedProducts.length > 0) {
+        for (const product of sortedProducts) {
+            if (product.price <= targetValue) {
+                selectedItems.push(product);
+                currentSum = product.price;
+                break; // Take the largest single item that fits
+            }
+        }
+      }
+      
+      // If after all attempts, no products fit, return empty
+      return selectedItems;
+    }
+
+    /**
+     * Creates a single POP card HTML element.
+     * @param {number} value - The S-Coin value for the card.
+     * @param {Array<Object>} items - An array of products to display on the card.
+     * @returns {HTMLElement} The created POP card div element.
+     */
+    function createPopCardElement(value, items) {
+      const pop = document.createElement('div');
+      pop.className = 'pop';
+
+      const total = items.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+      const remaining = (value - total).toFixed(2);
+
+      const headlineText = items.length > 1 ?
+        'Get all these products FREE!' :
+        'Get this product FREE!';
+      
+      let productHTML = '';
+      if (items.length > 0) {
+        items.forEach(item => {
+          const imgHTML = item.img ?
+            `<img src="${item.img}" alt="${item.name}" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'placeholder-icon\'><i class=\'fas fa-image\'></i></div>';">` :
+            `<div class="placeholder-icon"><i class="fas fa-image"></i></div>`;
           
-          // Fallback to sample data
-          productList = [
-            { name: 'Tefal Rice Cooker - Premium Edition', price: 499, img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { name: 'Mini Smart Fan - Portable USB Rechargeable', price: 299, img: 'https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { name: 'Oio Flask - Vacuum Insulated Stainless Steel', price: 399, img: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { name: 'Magnetic Powerbank - 10000mAh', price: 259, img: 'https://images.unsplash.com/photo-1606220588911-4561c3e1aafa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { name: 'Wireless Earbuds - Bluetooth 5.2', price: 199, img: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { name: 'Smart LED Lamp - Color Changing', price: 149, img: 'https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' }
-          ];
-          excelLoaded = true;
+          productHTML += `
+            <div class="product-item">
+              <div class="product-img">
+                ${imgHTML}
+              </div>
+              <div class="product-name">${item.name}</div>
+              <div class="product-price">RM${item.price.toFixed(2)}</div>
+            </div>
+          `;
         });
+      } else {
+        productHTML = `
+          <div class="product-item empty-product-item">
+            <div class="product-img">
+              <div class="placeholder-icon"><i class="fas fa-box-open"></i></div>
+            </div>
+            <div class="product-name">No suitable products found for this S-Coin value.</div>
+            <div class="product-price">RM0.00</div>
+          </div>
+        `;
+      }
+      
+      pop.innerHTML = `
+        <div class="pop-header">
+          <h2>RM${value.toFixed(2)} S-Coin Value</h2>
+          <div class="headline">${headlineText}</div>
+        </div>
+        
+        <div class="product-container">
+          <div class="product-grid">
+            ${productHTML}
+          </div>
+        </div>
+        
+        <div class="pop-footer">
+          ${items.length > 0 ? `
+            <div class="total">Total Value: RM${total}</div>
+            <div class="disclaimer">
+              *Actual products may vary. Items shown are suggestions.
+              T&C apply. Remaining balance: RM${remaining}
+            </div>
+          ` : `<div class="disclaimer">No products could be allocated for this S-Coin value.</div>`}
+        </div>
+      `;
+      
+      return pop;
     }
 
     function generatePOP() {
       if (!excelLoaded) {
-        alert('Product data is still loading. Please try again in a moment.');
+        alert('Product data is still loading. Please wait a moment or check your internet connection.');
         return;
       }
       
-      popGrid.innerHTML = '';
-      
-      const values = [
-        parseInt(document.getElementById('val1').value) || 0,
-        parseInt(document.getElementById('val2').value) || 0,
-        parseInt(document.getElementById('val3').value) || 0,
-        parseInt(document.getElementById('val4').value) || 0
-      ].filter(val => val > 0);
+      popGrid.innerHTML = ''; // Clear previous POP cards
+      let validValuesFound = false;
+
+      const values = inputElements
+        .map(input => {
+          const value = parseFloat(input.value);
+          // Check if value is a valid positive number
+          if (isNaN(value) || value <= 0) {
+            input.classList.add('invalid'); // Mark input as invalid
+            return null;
+          }
+          input.classList.remove('invalid'); // Remove invalid state if valid
+          return value;
+        })
+        .filter(val => val !== null); // Filter out null (invalid) values
       
       if (values.length === 0) {
         popGrid.innerHTML = `
           <div class="empty-state">
             <i class="fas fa-exclamation-circle"></i>
             <h3>No Valid S-Coin Values Entered</h3>
-            <p>Please enter at least one valid S-Coin value and try again</p>
+            <p>Please enter at least one positive S-Coin value and try again.</p>
           </div>
         `;
         return;
       }
       
-      values.forEach((val, index) => {
-        let remaining = val;
-        let items = [];
-        
-        // Try to find the best combination of products
-        for (let product of productList) {
-          if (product.price <= remaining && items.length < 3) {
-            items.push(product);
-            remaining -= product.price;
-          }
-        }
-        
-        const total = items.reduce((sum, item) => sum + item.price, 0);
-        const headlineText = items.length > 1 ? 
-          'Get all these products FREE!' : 
-          'Get this product FREE!';
-        
-        const pop = document.createElement('div');
-        pop.className = 'pop';
-        
-        // Format product display - handle long names
-        let productHTML = '';
-        if (items.length > 0) {
-          items.forEach(item => {
-            // Handle missing images with placeholder
-            const imgHTML = item.img ? 
-              `<img src="${item.img}" alt="${item.name}" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'placeholder-icon\'><i class=\'fas fa-image\'></i></div>';">` : 
-              `<div class="placeholder-icon"><i class="fas fa-image"></i></div>`;
-            
-            productHTML += `
-              <div class="product-item">
-                <div class="product-img">
-                  ${imgHTML}
-                </div>
-                <div class="product-name">${item.name}</div>
-                <div class="product-price">RM${item.price}</div>
-              </div>
-            `;
-          });
-        } else {
-          productHTML = `
-            <div class="product-item">
-              <div class="product-img">
-                <div class="placeholder-icon"><i class="fas fa-exclamation-triangle"></i></div>
-              </div>
-              <div class="product-name">No products available for this S-Coin value</div>
-              <div class="product-price">RM0</div>
-            </div>
-          `;
-        }
-        
-        pop.innerHTML = `
-          <div class="pop-header">
-            <h2>RM${val} S-Coin Value</h2>
-            <div class="headline">${headlineText}</div>
-          </div>
-          
-          <div class="product-container">
-            <div class="product-grid">
-              ${productHTML}
-            </div>
-          </div>
-          
-          <div class="pop-footer">
-            ${items.length > 0 ? `
-              <div class="total">Total Value: RM${total}</div>
-              <div class="disclaimer">
-                *Actual products may vary. Items shown are suggestions. 
-                T&C apply. Remaining balance: RM${remaining}
-              </div>
-            ` : ''}
+      values.forEach(val => {
+        const items = findBestProductCombination(val);
+        const popElement = createPopCardElement(val, items);
+        popGrid.appendChild(popElement);
+        validValuesFound = true;
+      });
+
+      if (!validValuesFound) {
+        popGrid.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-exclamation-circle"></i>
+            <h3>No POP Cards Generated</h3>
+            <p>All entered values were invalid or no products could be found for them.</p>
           </div>
         `;
-        
-        popGrid.appendChild(pop);
-      });
+      }
     }
 
     function clearAll() {
-      document.getElementById('val1').value = '';
-      document.getElementById('val2').value = '';
-      document.getElementById('val3').value = '';
-      document.getElementById('val4').value = '';
+      inputElements.forEach(input => {
+        input.value = '';
+        input.classList.remove('invalid'); // Clear any invalid styling
+      });
       
       popGrid.innerHTML = `
         <div class="empty-state">
