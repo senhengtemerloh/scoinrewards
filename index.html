@@ -89,51 +89,74 @@
       line-height: 1.15;
       display: block;
     }
+    /* ----- FAN-OUT STYLE FOR PRODUCTS ----- */
     .pop-card-products {
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      min-height: 180px;
+      min-height: 160px;
       position: relative;
       width: 100%;
       margin-bottom: 18px;
       gap: 0;
     }
     .product-img-wrap {
-      position: absolute;
-      transition: box-shadow .2s, left .25s, top .25s, transform .25s;
-      top: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 18px;
+      position: relative;
+      box-shadow: 0 2px 10px rgba(67,97,238,0.08);
+      border: 2px solid #e0e4ff;
+      margin-left: -35px;
+      margin-right: -35px;
+      transition: box-shadow .2s, transform .22s;
+    }
+    /* Always overlap by negative margin (like a fan) */
+    .pop-card-products.one .product-img-wrap {
+      margin: 0;
+      width: 130px;
+      height: 130px;
+      transform: scale(1.08) rotate(-4deg);
       z-index: 2;
     }
-    /* 1 product: Center, largest */
-    .pop-card-products.one .product-img-wrap:nth-child(1) {
-      left: 50%; transform: translateX(-50%) scale(1.05) rotate(-4deg); width: 130px; height: 130px; z-index: 3;
-    }
-    /* 2 products: left & right, slightly smaller */
     .pop-card-products.two .product-img-wrap:nth-child(1) {
-      left: 42%; transform: translateX(-50%) scale(0.9) rotate(-9deg); width: 110px; height: 110px; z-index: 2;
+      width: 110px;
+      height: 110px;
+      transform: rotate(-9deg) translateY(10px);
+      z-index: 1;
     }
     .pop-card-products.two .product-img-wrap:nth-child(2) {
-      left: 58%; transform: translateX(-50%) scale(1.05) rotate(9deg); width: 130px; height: 130px; z-index: 3;
+      width: 130px;
+      height: 130px;
+      transform: rotate(9deg) translateY(0px);
+      z-index: 2;
     }
-    /* 3 products: left, center, right, outer are smallest, middle is largest and in front */
     .pop-card-products.three .product-img-wrap:nth-child(1) {
-      left: 29%; transform: translateX(-50%) scale(0.82) rotate(-13deg); width: 90px; height: 90px; z-index: 1;
+      width: 110px;
+      height: 110px;
+      transform: rotate(-13deg) translateY(17px);
+      z-index: 1;
     }
     .pop-card-products.three .product-img-wrap:nth-child(2) {
-      left: 50%; transform: translateX(-50%) scale(1.1) rotate(0deg); width: 140px; height: 140px; z-index: 3;
+      width: 140px;
+      height: 140px;
+      transform: scale(1.04) rotate(0deg) translateY(0);
+      z-index: 2;
     }
     .pop-card-products.three .product-img-wrap:nth-child(3) {
-      left: 71%; transform: translateX(-50%) scale(0.82) rotate(13deg); width: 90px; height: 90px; z-index: 2;
+      width: 110px;
+      height: 110px;
+      transform: rotate(13deg) translateY(17px);
+      z-index: 1;
     }
     .product-img-wrap img, .product-img-wrap .placeholder-icon {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      border-radius: 18px;
-      box-shadow: 0 2px 10px rgba(67, 97, 238, 0.08);
+      border-radius: 12px;
       background: #f8f9ff;
-      border: 2px solid #e0e4ff;
       display: block;
     }
     .product-img-wrap .free-badge {
