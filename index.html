@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=700, initial-scale=1.0">
+  <meta name="viewport" content="width=800, initial-scale=1.0">
   <title>S-Coin POP Generator</title>
   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,10 +12,10 @@
       --primary: #4361ee;
       --secondary: #f72585;
       --accent: #4cc9f0;
-      --card-width: 520px;
-      --card-height: 300px;
-      --shadow: 0 10px 32px rgba(67, 97, 238, 0.14);
-      --headline-font: 1.7rem;
+      --card-width: 540px;
+      --card-height: 290px;
+      --shadow: 0 10px 32px rgba(67, 97, 238, 0.10);
+      --headline-font: 1.55rem;
     }
     body {
       font-family: 'Poppins', sans-serif;
@@ -64,17 +64,17 @@
       padding: 0;
     }
     .pop-card-header {
-      padding: 14px 10px 5px 10px;
+      padding: 13px 10px 4px 10px;
       text-align: center;
       flex-shrink: 0;
       width: 100%;
     }
     .s-coin-value {
-      font-size: 1.07rem;
+      font-size: 1.05rem;
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 5px;
+      margin-bottom: 4px;
       letter-spacing: 1px;
     }
     .headline {
@@ -82,26 +82,26 @@
       font-family: 'Montserrat', sans-serif;
       font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 1.4px;
       background: linear-gradient(90deg, var(--secondary), var(--primary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin: 0 auto 3px auto;
+      margin: 0 auto 2px auto;
       padding: 2px 0 0 0;
       width: 100%;
-      line-height: 1.18;
+      line-height: 1.13;
       display: block;
     }
-    /* --- IMPROVED PRODUCT ROW --- */
+    /* --- EQUAL SIZE PRODUCT ROW --- */
     .pop-card-products {
       display: flex;
       justify-content: center;
       align-items: flex-end;
       flex: 1 0 auto;
       width: 100%;
-      min-height: 155px;
-      margin-bottom: 8px;
-      margin-top: 7px;
+      min-height: 130px;
+      margin-bottom: 7px;
+      margin-top: 5px;
       position: relative;
       gap: 0;
     }
@@ -110,59 +110,25 @@
       align-items: center;
       justify-content: center;
       background: #fff;
-      border-radius: 13px;
+      border-radius: 12px;
       position: relative;
       box-shadow: 0 2px 10px rgba(67,97,238,0.08);
       border: 2px solid #e0e4ff;
+      width: 120px;
+      height: 120px;
+      margin: 0 16px;
+      transform: rotate(0deg);
+      z-index: 1;
       transition: box-shadow .2s, transform .18s;
-      margin-left: 0;
-      margin-right: 0;
     }
-    /* Centered for 1 product */
-    .pop-card-products.one .product-img-wrap {
-      margin: 0 0 0 0;
-      width: 142px;
-      height: 142px;
-      transform: scale(1.07) rotate(-3deg);
-      z-index: 2;
-    }
-    /* Two products, spaced */
-    .pop-card-products.two .product-img-wrap:nth-child(1) {
-      width: 112px; height: 112px;
-      margin-right: 24px;
-      transform: rotate(-6deg) translateY(10px);
-      z-index: 1;
-    }
-    .pop-card-products.two .product-img-wrap:nth-child(2) {
-      width: 142px; height: 142px;
-      margin-left: 24px;
-      transform: rotate(7deg) translateY(0px);
-      z-index: 2;
-    }
-    /* Three products, all spaced and much less tilt */
-    .pop-card-products.three .product-img-wrap:nth-child(1) {
-      width: 112px; height: 112px;
-      margin-right: 38px;
-      transform: rotate(-5deg) translateY(18px);
-      z-index: 1;
-    }
-    .pop-card-products.three .product-img-wrap:nth-child(2) {
-      width: 152px; height: 152px;
-      margin-left: 0; margin-right: 0;
-      transform: scale(1.09) rotate(0deg) translateY(0);
-      z-index: 3;
-    }
-    .pop-card-products.three .product-img-wrap:nth-child(3) {
-      width: 112px; height: 112px;
-      margin-left: 38px;
-      transform: rotate(5deg) translateY(18px);
-      z-index: 2;
-    }
+    /* Reduce overlap for 2 and 3 products, and keep all images same size and straight */
+    .pop-card-products.two .product-img-wrap { margin: 0 24px; }
+    .pop-card-products.three .product-img-wrap { margin: 0 12px; }
     .product-img-wrap img, .product-img-wrap .placeholder-icon {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      border-radius: 10px;
+      border-radius: 9px;
       background: #f8f9ff;
       display: block;
     }
@@ -173,26 +139,24 @@
       background: var(--secondary);
       color: #fff;
       font-weight: 700;
-      font-size: .97rem;
+      font-size: .93rem;
       padding: 3px 10px;
-      border-radius: 12px;
+      border-radius: 10px;
       z-index: 5;
-      box-shadow: 0 1px 5px rgba(247, 37, 133, 0.19);
+      box-shadow: 0 1px 5px rgba(247, 37, 133, 0.15);
     }
     .pop-card-footer {
       text-align: center;
-      padding: 4px 14px 12px 14px;
+      padding: 4px 14px 10px 14px;
       width: 100%;
     }
-    /* Hide total value line! */
     .total-value { display: none !important; }
     .disclaimer {
-      font-size: 0.89rem;
+      font-size: 0.87rem;
       color: #9aa5b8;
       line-height: 1.23;
       margin-top: 0;
     }
-    /* Print styles */
     @media print {
       body {
         background: #fff;
@@ -292,10 +256,8 @@ let excelLoaded = false;
 const dataStatus = document.getElementById('dataStatus');
 const popGrid = document.getElementById('popGrid');
 
-// Init
 window.addEventListener('DOMContentLoaded', () => loadExcelData());
 
-// Load Excel product data
 function loadExcelData() {
   fetch('data.xlsx')
     .then(response => {
@@ -335,7 +297,6 @@ function loadExcelData() {
     });
 }
 
-// Generate up to 4 cards for print
 function generatePOP() {
   if (!excelLoaded) {
     alert('Product data is still loading. Please try again in a moment.');
@@ -362,22 +323,58 @@ function generatePOP() {
     return;
   }
 
-  values.slice(0, 4).forEach((val, index) => {
-    let items = getRandomProducts(val);
+  values.slice(0, 4).forEach(val => {
+    // Decide how many products to show
+    let maxItems = 1;
+    if (val >= 300) maxItems = 3;
+    else if (val >= 111) maxItems = 2;
+
+    // Pick products that maximize S-Coin usage, up to maxItems
+    let bestCombo = [];
+    let bestTotal = 0;
+    let n = productList.length;
+    // Try all combinations for maxItems (brute force for up to 3 only)
+    function tryCombos(arr, combo=[], sum=0, idx=0) {
+      if (combo.length === maxItems) {
+        if (sum <= val && sum > bestTotal) {
+          bestTotal = sum;
+          bestCombo = combo.slice();
+        }
+        return;
+      }
+      for (let i=idx; i<arr.length; ++i) {
+        if (sum + arr[i].price <= val) {
+          combo.push(arr[i]);
+          tryCombos(arr, combo, sum+arr[i].price, i+1);
+          combo.pop();
+        }
+      }
+    }
+    tryCombos(productList);
+
+    // Fallback: just get most expensive that fits if none found
+    if (bestCombo.length === 0 && productList.length > 0) {
+      for (let prod of productList) {
+        if (prod.price <= val) {
+          bestCombo = [prod];
+          break;
+        }
+      }
+    }
 
     // Headline text
     let headlineText = "GET THIS FREE!";
-    if (items.length === 2) headlineText = "GET BOTH FREE!";
-    else if (items.length === 3) headlineText = "GET ALL THESE FREE!";
+    if (bestCombo.length === 2) headlineText = "GET BOTH FREE!";
+    else if (bestCombo.length === 3) headlineText = "GET ALL THESE FREE!";
 
-    // Product images row layout class
+    // Product row class
     let rowClass = "";
-    if (items.length === 1) rowClass = "one";
-    else if (items.length === 2) rowClass = "two";
-    else if (items.length === 3) rowClass = "three";
+    if (bestCombo.length === 1) rowClass = "one";
+    else if (bestCombo.length === 2) rowClass = "two";
+    else if (bestCombo.length === 3) rowClass = "three";
 
-    // Product HTML
-    let productsHTML = items.map((item, i) => {
+    // Product HTML (all equal size)
+    let productsHTML = bestCombo.map((item) => {
       let imgHtml = item.img ?
         `<img src="${item.img}" alt="${item.name}" onerror="this.onerror=null;this.style.display='none';">`
         : `<div class="placeholder-icon"><i class="fas fa-image"></i></div>`;
@@ -406,32 +403,6 @@ function generatePOP() {
   });
 }
 
-// Random product selector (returns up to 3 products, all fit within budget, random order)
-function getRandomProducts(budget) {
-  const products = productList.slice().sort(() => Math.random() - 0.5);
-  let bestCombo = [], bestTotal = 0;
-  for (let t = 0; t < 25; t++) { // Try up to 25 shuffles for better randomness
-    let combo = [], total = 0;
-    for (let prod of products) {
-      if (combo.length < 3 && prod.price + total <= budget && !combo.includes(prod)) {
-        combo.push(prod);
-        total += prod.price;
-      }
-    }
-    if (
-      (combo.length > bestCombo.length) ||
-      (combo.length === bestCombo.length && total > bestTotal)
-    ) {
-      bestCombo = combo.slice();
-      bestTotal = total;
-      if (combo.length === 3) break;
-    }
-    products.sort(() => Math.random() - 0.5); // reshuffle for next try
-  }
-  return bestCombo;
-}
-
-// Clear
 function clearAll() {
   document.getElementById('val1').value = '';
   document.getElementById('val2').value = '';
