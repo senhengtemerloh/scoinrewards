@@ -4,221 +4,708 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>S-Coin POP Generator</title>
-  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #d32f2f;
+      --primary-light: #ff6659;
+      --primary-dark: #9a0007;
+      --secondary: #2e7d32;
+      --secondary-light: #60ad5e;
+      --secondary-dark: #005005;
+      --accent: #ff9800;
+      --accent-light: #ffc947;
+      --accent-dark: #c66900;
+      --background: #f8f9fa;
+      --card-bg: linear-gradient(135deg, #fff9f9, #fff3e0);
+      --text: #333;
+      --light-text: #666;
+      --card-size: 320px;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f8f9fa;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--background);
+      padding: 20px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
       padding: 20px;
     }
-    h1 {
+    
+    header {
       text-align: center;
-      color: #d32f2f;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 12px;
+      color: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
-    .container {
-      max-width: 960px;
-      margin: auto;
+    
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
     }
-    .input-area {
+    
+    header p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+    
+    .input-section {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+    
+    .section-title {
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: 20px;
       display: flex;
+      align-items: center;
       gap: 10px;
-      flex-wrap: wrap;
+    }
+    
+    .section-title i {
+      background: var(--primary);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
       justify-content: center;
+    }
+    
+    .input-area {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
       margin-bottom: 20px;
     }
-    .input-area input[type="number"] {
-      padding: 10px;
-      width: 200px;
-      font-size: 16px;
-    }
-    .input-area input[type="file"] {
-      font-size: 16px;
-    }
-    .input-area button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #2e7d32;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .pop-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .pop {
-      background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-      border: 3px solid #ff9800;
-      padding: 10px;
-      text-align: center;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      aspect-ratio: 1 / 1;
+    
+    .input-group {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
     }
-    .pop h2 {
-      font-size: 18px;
-      margin: 10px 0 5px;
-      color: #e65100;
+    
+    .input-group label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--primary);
     }
-    .headline {
-      font-size: 26px;
-      font-weight: bold;
-      color: #b71c1c;
-      margin-top: 10px;
-      margin-bottom: 15px;
-      text-transform: uppercase;
+    
+    .input-group input {
+      padding: 12px 15px;
+      font-size: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      transition: all 0.3s;
     }
-    .product {
+    
+    .input-group input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.2);
+    }
+    
+    .input-group input::placeholder {
+      color: #aaa;
+    }
+    
+    .buttons {
       display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 10px 0;
       flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
     }
-    .product-item {
-      width: 120px;
-      height: 160px;
-      background: #fff;
-      border: 1px solid #ddd;
+    
+    .btn {
+      padding: 12px 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+    }
+    
+    .btn-secondary {
+      background: var(--secondary);
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background: var(--secondary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+    }
+    
+    .btn-accent {
+      background: var(--accent);
+      color: white;
+    }
+    
+    .btn-accent:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
+    }
+    
+    .pop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(var(--card-size), 1fr));
+      gap: 25px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+    
+    .pop {
+      background: var(--card-bg);
+      border: 3px solid var(--accent);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s;
+      width: var(--card-size);
+      height: var(--card-size);
+      margin: 0 auto;
+    }
+    
+    .pop:hover {
+      transform: translateY(-5px);
+    }
+    
+    .pop-header {
+      text-align: center;
+      padding-bottom: 15px;
+      border-bottom: 2px dashed var(--accent);
+      margin-bottom: 15px;
+    }
+    
+    .pop h2 {
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+    
+    .headline {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin: 10px 0;
+      padding: 8px;
+      background: rgba(255, 152, 0, 0.1);
       border-radius: 6px;
+    }
+    
+    .product-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+    
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    
+    .product-item {
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: start;
-      padding: 5px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      transition: all 0.3s;
     }
-    .product-item img {
-      width: 100%;
-      height: 90px;
+    
+    .product-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .product-img {
+      width: 120px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      background: #f9f9f9;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    
+    .product-img img {
+      max-width: 100%;
+      max-height: 100%;
       object-fit: contain;
     }
-    .product-item .name {
-      font-size: 10px;
-      font-weight: bold;
-      margin: 4px 0;
+    
+    .product-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+      margin-bottom: 5px;
+      height: 3.6em;
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
+      line-height: 1.2;
     }
-    .product-item .price {
-      font-size: 11px;
-      color: #2e7d32;
+    
+    .product-price {
+      font-weight: 700;
+      color: var(--secondary);
+      font-size: 1.1rem;
+      margin-top: 5px;
     }
-    .total {
-      font-weight: bold;
-      margin-top: 10px;
-      color: #388e3c;
-    }
-    .print-btn {
-      margin-top: 30px;
+    
+    .pop-footer {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 2px dashed var(--accent);
       text-align: center;
     }
-    .print-btn button {
-      padding: 12px 30px;
-      background: #0288d1;
-      color: white;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
+    
+    .total {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--secondary-dark);
+      margin-bottom: 10px;
     }
+    
+    .disclaimer {
+      font-size: 0.8rem;
+      color: var(--light-text);
+      margin-top: 10px;
+    }
+    
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    
+    .empty-state i {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+    
+    .empty-state h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    .instructions {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      margin: 30px 0;
+    }
+    
+    .instructions ul {
+      padding-left: 20px;
+      margin: 15px 0;
+    }
+    
+    .instructions li {
+      margin-bottom: 10px;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--light-text);
+      font-size: 0.9rem;
+      margin-top: 30px;
+    }
+    
+    @media (max-width: 768px) {
+      .pop-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .input-area {
+        grid-template-columns: 1fr;
+      }
+      
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      :root {
+        --card-size: 300px;
+      }
+    }
+    
     @media print {
       body * {
         visibility: hidden;
       }
+      
       .pop-grid, .pop-grid * {
         visibility: visible;
       }
+      
       .pop-grid {
         position: absolute;
         top: 0;
         left: 0;
+        width: 100%;
+        height: 100%;
+        display: grid;
         grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 15px;
+        padding: 15mm;
+        box-sizing: border-box;
       }
+      
+      .pop {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        box-shadow: none;
+        margin: 0;
+        transform: none !important;
+      }
+      
+      .btn, .input-section, header, footer, .instructions {
+        display: none;
+      }
+      
+      @page {
+        size: A4 portrait;
+        margin: 15mm;
+      }
+    }
+    
+    .status-message {
+      text-align: center;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+    
+    .status-loading {
+      background: #e3f2fd;
+      color: #0d47a1;
+    }
+    
+    .status-success {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    
+    .status-error {
+      background: #ffebee;
+      color: #d32f2f;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>S-Coin POP Generator</h1>
-    <div class="input-area">
-      <input type="file" id="excelFile" accept=".xlsx" />
-      <input type="number" id="val1" placeholder="S-Coin Value 1" />
-      <input type="number" id="val2" placeholder="S-Coin Value 2" />
-      <input type="number" id="val3" placeholder="S-Coin Value 3" />
-      <input type="number" id="val4" placeholder="S-Coin Value 4" />
-      <button onclick="generatePOP()">Generate POP</button>
+    <header>
+      <h1><i class="fas fa-coins"></i> S-Coin POP Generator</h1>
+      <p>Create professional Proof of Purchase (POP) cards for S-Coin promotions</p>
+    </header>
+    
+    <section class="input-section">
+      <h2 class="section-title"><i class="fas fa-cog"></i> Generate POP Cards</h2>
+      
+      <div id="dataStatus" class="status-message status-loading">
+        <i class="fas fa-spinner fa-spin"></i> Loading product data from Excel file...
+      </div>
+      
+      <div class="input-area">
+        <div class="input-group">
+          <label for="val1">S-Coin Value 1 (RM)</label>
+          <input type="number" id="val1" placeholder="Enter amount" min="0">
+        </div>
+        
+        <div class="input-group">
+          <label for="val2">S-Coin Value 2 (RM)</label>
+          <input type="number" id="val2" placeholder="Enter amount" min="0">
+        </div>
+        
+        <div class="input-group">
+          <label for="val3">S-Coin Value 3 (RM)</label>
+          <input type="number" id="val3" placeholder="Enter amount" min="0">
+        </div>
+        
+        <div class="input-group">
+          <label for="val4">S-Coin Value 4 (RM)</label>
+          <input type="number" id="val4" placeholder="Enter amount" min="0">
+        </div>
+      </div>
+      
+      <div class="buttons">
+        <button class="btn btn-primary" onclick="generatePOP()">
+          <i class="fas fa-magic"></i> Generate POP Cards
+        </button>
+        
+        <button class="btn btn-secondary" onclick="clearAll()">
+          <i class="fas fa-eraser"></i> Clear All
+        </button>
+        
+        <button class="btn btn-accent" onclick="window.print()">
+          <i class="fas fa-print"></i> Print A4 (4 POP)
+        </button>
+      </div>
+    </section>
+    
+    <section class="instructions">
+      <h2 class="section-title"><i class="fas fa-info-circle"></i> How to Use</h2>
+      <ul>
+        <li>Enter S-Coin values in RM (e.g., 100, 200, 500) in the input fields</li>
+        <li>Click "Generate POP Cards" to create your Proof of Purchase cards</li>
+        <li>Use "Clear All" to reset all inputs and generated cards</li>
+        <li>Click "Print A4" to print 4 POP cards on a single A4 sheet</li>
+        <li>Each card will show suggested products that fit within the S-Coin value</li>
+        <li>Product data is loaded from the <code>data.xlsx</code> file in the same directory</li>
+      </ul>
+    </section>
+    
+    <div class="pop-grid" id="popGrid">
+      <div class="empty-state">
+        <i class="fas fa-coins"></i>
+        <h3>No POP Cards Generated Yet</h3>
+        <p>Enter S-Coin values and click "Generate POP Cards" to create your cards</p>
+      </div>
     </div>
-    <div class="pop-grid" id="popGrid"></div>
-    <div class="print-btn">
-      <button onclick="window.print()">Print A4 (4 POP)</button>
-    </div>
+    
+    <footer>
+      <p>S-Coin POP Generator &copy; 2023 | Terms & Conditions Apply</p>
+    </footer>
   </div>
 
   <script>
+    // Global product list loaded from Excel
     let productList = [];
+    let excelLoaded = false;
 
-    document.getElementById('excelFile').addEventListener('change', function (e) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const json = XLSX.utils.sheet_to_json(sheet);
-        productList = json.map(row => ({
-          name: row['FULL NAME'],
-          price: parseFloat(row['MEMBER']),
-          img: row['URL']
-        })).filter(p => p.name && p.price && p.img &&
-          !p.name.includes("Uniq") && !p.name.includes("AMAZINGthing"));
-        alert("Excel file loaded successfully!");
-      };
-      reader.readAsArrayBuffer(file);
+    // DOM Elements
+    const dataStatus = document.getElementById('dataStatus');
+    const popGrid = document.getElementById('popGrid');
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadExcelData();
     });
 
+    // Load product data from Excel file
+    function loadExcelData() {
+      // Try to fetch the data.xlsx file
+      fetch('data.xlsx')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Excel file not found or network error');
+          }
+          return response.arrayBuffer();
+        })
+        .then(buffer => {
+          // Parse Excel data
+          const workbook = XLSX.read(buffer, { type: 'array' });
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+          
+          // Convert to JSON
+          const jsonData = XLSX.utils.sheet_to_json(worksheet);
+          
+          // Map to product list (FULL NAME, URL, MEMBER)
+          productList = jsonData.map(row => ({
+            name: row['FULL NAME'] || 'Unknown Product',
+            img: row['URL'] || '',
+            price: parseFloat(row['MEMBER']) || 0
+          })).filter(product => product.price > 0);
+          
+          // Sort by price descending
+          productList.sort((a, b) => b.price - a.price);
+          
+          // Update UI
+          dataStatus.innerHTML = `<i class="fas fa-check-circle"></i> Loaded ${productList.length} products from Excel file`;
+          dataStatus.className = 'status-message status-success';
+          excelLoaded = true;
+        })
+        .catch(error => {
+          console.error('Error loading Excel data:', error);
+          dataStatus.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error loading Excel data: ${error.message}. Using sample data.`;
+          dataStatus.className = 'status-message status-error';
+          
+          // Fallback to sample data
+          productList = [
+            { name: 'Tefal Rice Cooker - Premium Edition with Smart Technology', price: 499, img: 'https://via.placeholder.com/120?text=Tefal' },
+            { name: 'Mini Smart Fan - Portable USB Rechargeable with 3 Speed Settings', price: 299, img: 'https://via.placeholder.com/120?text=Fan' },
+            { name: 'Oio Flask - Vacuum Insulated Stainless Steel 500ml', price: 399, img: 'https://via.placeholder.com/120?text=Flask' },
+            { name: 'Magnetic Powerbank - 10000mAh with Wireless Charging', price: 259, img: 'https://via.placeholder.com/120?text=Powerbank' },
+            { name: 'Wireless Earbuds - Bluetooth 5.2 with Noise Cancellation', price: 199, img: 'https://via.placeholder.com/120?text=Earbuds' },
+            { name: 'Smart LED Lamp - Color Changing with App Control', price: 149, img: 'https://via.placeholder.com/120?text=Lamp' }
+          ];
+          excelLoaded = true;
+        });
+    }
+
     function generatePOP() {
-      const grid = document.getElementById('popGrid');
-      grid.innerHTML = '';
-      const values = [val1.value, val2.value, val3.value, val4.value];
-      values.forEach(val => {
-        if (!val || isNaN(val)) return;
-        let budget = parseFloat(val);
-        let shuffled = [...productList].sort(() => 0.5 - Math.random());
-        let selected = [];
-        for (let i = 0; i < shuffled.length && selected.length < 3; i++) {
-          if (shuffled[i].price <= budget) {
-            selected.push(shuffled[i]);
-            budget -= shuffled[i].price;
+      if (!excelLoaded) {
+        alert('Product data is still loading. Please try again in a moment.');
+        return;
+      }
+      
+      popGrid.innerHTML = '';
+      
+      const values = [
+        parseInt(document.getElementById('val1').value) || 0,
+        parseInt(document.getElementById('val2').value) || 0,
+        parseInt(document.getElementById('val3').value) || 0,
+        parseInt(document.getElementById('val4').value) || 0
+      ].filter(val => val > 0);
+      
+      if (values.length === 0) {
+        popGrid.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-exclamation-circle"></i>
+            <h3>No Valid S-Coin Values Entered</h3>
+            <p>Please enter at least one valid S-Coin value and try again</p>
+          </div>
+        `;
+        return;
+      }
+      
+      values.forEach((val, index) => {
+        let remaining = val;
+        let items = [];
+        
+        // Try to find the best combination of products
+        for (let product of productList) {
+          if (product.price <= remaining && items.length < 3) {
+            items.push(product);
+            remaining -= product.price;
           }
         }
-        const total = selected.reduce((sum, item) => sum + item.price, 0);
-        const headlineText = selected.length > 1 ? 'Get all these FREE!' : 'Get this FREE!';
+        
+        const total = items.reduce((sum, item) => sum + item.price, 0);
+        const headlineText = items.length > 1 ? 
+          'Get all these products FREE!' : 
+          'Get this product FREE!';
+        
         const pop = document.createElement('div');
         pop.className = 'pop';
-        pop.innerHTML = `
-          <h2>RM${val} worth of S-Coin</h2>
-          <div class="headline">${headlineText}</div>
-          <div class="product">
-            ${selected.map(item => `
+        
+        // Format product display - handle long names
+        let productHTML = '';
+        if (items.length > 0) {
+          items.forEach(item => {
+            productHTML += `
               <div class="product-item">
-                <img src="${item.img}" alt="${item.name}" />
-                <div class="name" title="${item.name}">${item.name}</div>
-                <div class="price">RM${item.price.toFixed(2)}</div>
+                <div class="product-img">
+                  <img src="${item.img}" alt="${item.name}">
+                </div>
+                <div class="product-name">${item.name}</div>
+                <div class="product-price">RM${item.price}</div>
               </div>
-            `).join('')}
+            `;
+          });
+        } else {
+          productHTML = `
+            <div class="empty-state" style="padding: 10px; margin: 0;">
+              <i class="fas fa-exclamation-triangle"></i>
+              <h3 style="font-size: 1.2rem;">No Products Found</h3>
+              <p>No available products for this S-Coin value</p>
+            </div>
+          `;
+        }
+        
+        pop.innerHTML = `
+          <div class="pop-header">
+            <h2>RM${val} S-Coin Value</h2>
+            <div class="headline">${headlineText}</div>
           </div>
-          <div class="total">Total: RM${total.toFixed(2)} (Fully Covered!)</div>
-          <div style="font-size: 10px; margin-top: 5px;">*Items shown are suggestions. T&C apply.</div>
+          
+          <div class="product-container">
+            <div class="product-grid">
+              ${productHTML}
+            </div>
+          </div>
+          
+          <div class="pop-footer">
+            ${items.length > 0 ? `
+              <div class="total">Total Value: RM${total}</div>
+              <div class="disclaimer">
+                *Actual products may vary. Items shown are suggestions. 
+                T&C apply. Remaining balance: RM${remaining}
+              </div>
+            ` : ''}
+          </div>
         `;
-        grid.appendChild(pop);
+        
+        popGrid.appendChild(pop);
       });
+    }
+
+    function clearAll() {
+      document.getElementById('val1').value = '';
+      document.getElementById('val2').value = '';
+      document.getElementById('val3').value = '';
+      document.getElementById('val4').value = '';
+      
+      popGrid.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-coins"></i>
+          <h3>No POP Cards Generated Yet</h3>
+          <p>Enter S-Coin values and click "Generate POP Cards" to create your cards</p>
+        </div>
+      `;
     }
   </script>
 </body>
