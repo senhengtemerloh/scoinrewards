@@ -21,7 +21,7 @@
       --border-light: #e0e4ff;
       --shadow: 0 10px 30px rgba(67, 97, 238, 0.15);
       --card-width: 300px;
-      --card-height: 450px;
+      --card-height: 450px; /* Still a base, but product grid will determine actual height */
       --gap-medium: 20px;
       --gap-large: 30px;
       --padding-medium: 20px;
@@ -252,7 +252,7 @@
       flex-direction: column;
       transition: transform 0.4s, box-shadow 0.4s;
       width: var(--card-width);
-      height: var(--card-height);
+      height: var(--card-height); /* Set minimum height, actual height can expand */
       margin: 0 auto;
       position: relative;
       overflow: hidden;
@@ -271,33 +271,28 @@
       right: 0;
       height: 8px;
       background: linear-gradient(90deg, var(--primary), var(--accent));
+      z-index: 10; /* Ensure it's on top */
     }
     
     .pop-header {
       text-align: center;
       padding: 25px 20px 20px;
-      margin-bottom: 10px;
       position: relative;
+      z-index: 5; /* Above elements below */
     }
-    
-    .pop h2 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.8rem;
-      color: var(--primary);
-      margin-bottom: 10px;
-      text-shadow: 0 2px 3px rgba(0,0,0,0.1);
-    }
-    
+
     .headline {
-      font-size: 1.3rem;
-      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem; /* Increased size for prominence */
+      font-weight: 800; /* Bolder */
       color: var(--secondary);
-      margin: 15px 0;
-      padding: 10px;
+      margin-bottom: 10px; /* Space above S-Coin Value */
+      padding: 8px 15px; /* Slightly more compact */
       background: rgba(244, 117, 175, 0.1);
       border-radius: 50px;
       display: inline-block;
       position: relative;
+      letter-spacing: -0.5px;
     }
     
     .headline::after {
@@ -311,47 +306,72 @@
       background: var(--accent);
       border-radius: 2px;
     }
+
+    .pop h2 { /* This is for S-Coin Value */
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.6rem; /* Slightly smaller than headline */
+      color: var(--primary);
+      margin-top: 15px; /* Space below headline */
+      text-shadow: 0 2px 3px rgba(0,0,0,0.1);
+    }
     
     .product-container {
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center; /* Center product items vertically */
+      align-items: center; /* Center product items horizontally */
       padding: 0 var(--padding-medium) 25px;
+      overflow: hidden; /* Hide overflow for stacked items */
     }
     
     .product-grid {
       display: flex;
       flex-direction: column;
-      gap: 15px; /* Reduced gap for more items */
-      margin: 0 auto;
+      align-items: center; /* Center the stack of images */
+      justify-content: center; /* Vertically center the stack */
       width: 100%;
+      height: 100%; /* Take available height for centering */
+      position: relative; /* For overlapping items */
     }
     
     .product-item {
       background: white;
       border-radius: 15px;
-      padding: 12px; /* Reduced padding */
+      padding: 10px; /* Reduced padding */
       display: flex;
       flex-direction: column;
       align-items: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* Slightly more prominent shadow */
       transition: all var(--transition-speed);
       border: 1px solid #eef2ff;
+      width: 90%; /* Control width of individual item */
+      position: relative;
+      z-index: 1; /* Default z-index for stacking */
     }
-    
+
+    /* Stacking effect for multiple items */
+    .product-grid .product-item + .product-item {
+        margin-top: -20px; /* Overlap previous item */
+        z-index: 2; /* Bring subsequent items forward slightly */
+    }
+    .product-grid .product-item + .product-item + .product-item {
+        z-index: 3; /* Bring third item even further forward */
+    }
+
     .product-item:hover {
-      transform: scale(1.03);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      transform: scale(1.03) translateY(-5px); /* Lift and enlarge slightly on hover */
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      z-index: 4; /* Bring hovered item to front */
     }
     
     .product-img {
-      width: 150px; /* Slightly reduced width */
-      height: 120px; /* Slightly reduced height */
+      width: 180px; /* Larger image area */
+      height: 140px; /* Larger image area */
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 10px; /* Reduced margin */
+      margin-bottom: 0; /* No margin as name is removed */
       background: #f8f9ff;
       border-radius: 12px;
       overflow: hidden;
@@ -362,7 +382,7 @@
     .product-img img {
       max-width: 100%;
       max-height: 100%;
-      object-fit: contain;
+      object-fit: contain; /* Ensures image fits within bounds */
       transition: transform var(--transition-speed);
     }
     
@@ -370,25 +390,13 @@
       transform: scale(1.05);
     }
     
-    .product-name {
-      font-weight: 600;
-      font-size: 1rem; /* Slightly reduced font size */
-      text-align: center;
-      margin-bottom: 5px; /* Reduced margin */
-      height: 3.2em; /* Adjusted for 2 lines */
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2; /* Limit to 2 lines */
-      -webkit-box-orient: vertical;
-      line-height: 1.6; /* Adjusted line height */
-      color: var(--text);
-    }
+    /* .product-name - REMOVED */
     
     .product-price {
       font-weight: 700;
       color: var(--primary);
-      font-size: 1.2rem; /* Slightly reduced font size */
-      margin-top: 5px;
+      font-size: 1.2rem;
+      margin-top: 10px; /* Space after image */
       background: rgba(67, 97, 238, 0.1);
       padding: 5px 15px;
       border-radius: 20px;
@@ -529,71 +537,85 @@
         width: 100%;
         height: auto; /* Allow height to adjust based on content */
         display: grid;
-        /* Adjust grid-template-columns to dynamically fit 2 or 4 cards per row */
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 20px; /* Reduced gap for print */
+        gap: 20px; /* Consistent gap for print */
         padding: 15mm;
         box-sizing: border-box;
       }
 
-      .pop-grid:has(.pop:nth-child(n+3)) { /* If there are 3 or more cards, keep 2 columns */
+      /* Dynamically adjust print grid based on number of cards */
+      .pop-grid:has(.pop:nth-child(n+3)) { /* If 3 or more cards, use 2 columns */
         grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr); /* Ensure 2x2 layout */
       }
-
-      .pop-grid:not(:has(.pop:nth-child(n+3))) { /* If there are 1 or 2 cards, use 1 column to make them larger */
+      .pop-grid:not(:has(.pop:nth-child(n+3))) { /* If 1 or 2 cards, use 1 column */
         grid-template-columns: 1fr;
+        grid-template-rows: auto; /* Allow height to be dynamic */
       }
       
       .pop {
         page-break-inside: avoid;
         break-inside: avoid;
-        box-shadow: none !important;
-        margin: 0;
-        transform: none !important;
+        /* Re-enable backgrounds and colors for print */
+        background: var(--card-bg) !important; 
+        box-shadow: var(--shadow) !important; /* Retain subtle shadow */
+        -webkit-print-color-adjust: exact; /* Crucial for WebKit browsers */
+        print-color-adjust: exact; /* Standard for other browsers */
+
+        margin: 0 !important; /* Remove margin for tighter grid */
+        transform: none !important; /* Remove any transforms */
         width: 100%; /* Ensure pop takes full width within its grid cell */
-        height: auto; /* Allow height to expand */
+        height: 100%; /* Take up allocated grid cell height */
         min-height: 400px; /* Ensure a minimum height for smaller content */
+      }
+
+      .pop::before { /* Ensure top border also prints */
+        background: linear-gradient(90deg, var(--primary), var(--accent)) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
 
       .pop-header, .product-container, .pop-footer {
         padding: 10px; /* Reduced padding for print */
       }
 
-      .pop h2 {
-        font-size: 1.5rem; /* Smaller font size for print */
+      .headline { /* Make headline slightly smaller for print */
+        font-size: 1.4rem; 
+        padding: 5px 10px;
       }
-
-      .headline {
-        font-size: 1.1rem;
-        padding: 5px;
-      }
-
-      .product-item {
-        padding: 8px;
-        border-radius: 10px;
-      }
-
-      .product-img {
-        width: 120px;
-        height: 100px;
-      }
-
-      .product-name {
-        font-size: 0.9rem;
-        -webkit-line-clamp: 3; /* Allow 3 lines on print for longer names */
-      }
-
-      .product-price {
-        font-size: 1rem;
-        padding: 3px 10px;
-      }
-
-      .total {
+      
+      .pop h2 { /* Make S-Coin value smaller for print */
         font-size: 1.2rem;
       }
 
+      .product-item {
+        padding: 6px; /* Further reduced padding for print */
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05) !important; /* Lighter shadow for print */
+      }
+
+      .product-img {
+        width: 140px; /* Adjust image size for print */
+        height: 110px;
+      }
+
+      /* Stacking for print */
+      .product-grid .product-item + .product-item {
+        margin-top: -15px; /* Slightly less overlap for print */
+      }
+
+      /* No product name on print as well */
+
+      .product-price {
+        font-size: 1rem;
+        padding: 3px 8px;
+      }
+
+      .total {
+        font-size: 1.1rem;
+      }
+
       .disclaimer {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
       }
       
       .btn, .input-section, header, footer, .instructions, .status-message {
@@ -721,7 +743,7 @@
         <li>Enter S-Coin values in RM (e.g., 100, 200, 500) in the input fields. You can enter decimal values.</li>
         <li>Click "**Generate POP Cards**" to create your Proof of Purchase cards.</li>
         <li>Use "**Clear All**" to reset all inputs and generated cards.</li>
-        <li>Click "**Print (A4 optimized)**" to print your generated POP cards. The layout adjusts for optimal printing on A4 sheets.</li>
+        <li>Click "**Print (A4 optimized)**" to print your generated POP cards. The layout and colors will be consistent with the on-screen display for optimal printing on A4 sheets.</li>
         <li>Each card will show suggested products that fit within the S-Coin value, prioritizing the best value match.</li>
         <li>Product data is loaded from the `data.xlsx` file in the same directory. If not found, sample data will be used.</li>
       </ul>
@@ -790,7 +812,7 @@
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
         
         productList = jsonData.map(row => ({
-            name: row['FULL NAME'] || 'Unknown Product',
+            name: row['FULL NAME'] || 'Unknown Product', // Keep name in data, but not displayed on card
             img: row['URL'] || '',
             price: parseFloat(row['MEMBER']) || 0
           }))
@@ -846,11 +868,10 @@
       let currentSum = 0;
       const MAX_ITEMS = 3; // Maximum number of items per POP card
 
-      // Sort productList by price descending to prioritize higher value items
-      // This is already done during load, but re-sorting here for clarity if data changes later
+      // Always sort products by price descending to prioritize larger value items
       const sortedProducts = [...productList].sort((a, b) => b.price - a.price);
 
-      // Attempt to find items that sum up to the target value
+      // Strategy 1: Greedy approach - pick largest items that fit up to MAX_ITEMS
       for (const product of sortedProducts) {
         if (selectedItems.length < MAX_ITEMS && currentSum + product.price <= targetValue) {
           selectedItems.push(product);
@@ -858,49 +879,52 @@
         }
       }
 
-      // If we couldn't fill MAX_ITEMS or get close, try other combinations
-      if (selectedItems.length === 0 || (targetValue - currentSum > 0 && selectedItems.length < MAX_ITEMS)) {
-        selectedItems.length = 0; // Reset
-        currentSum = 0;
+      // If we still have less than MAX_ITEMS and there's a significant remaining value,
+      // or if no items were selected initially, try more specific approaches.
+      // A "significant" remainder might be > 20% of the target value, or enough for another product.
+      const hasSignificantRemainder = (targetValue - currentSum > 0 && selectedItems.length < MAX_ITEMS && productList.some(p => p.price <= (targetValue - currentSum) * 0.8));
 
-        // Try to get a single item that is closest to the target value
-        // or up to MAX_ITEMS if they fit
-        let bestSingleProduct = null;
-        for (const product of sortedProducts) {
-          if (product.price <= targetValue) {
-            if (!bestSingleProduct || (targetValue - product.price < targetValue - bestSingleProduct.price)) {
-                bestSingleProduct = product;
-            }
+      if (selectedItems.length === 0 || hasSignificantRemainder) {
+          selectedItems.length = 0; // Reset
+          currentSum = 0;
+
+          // Strategy 2: Try to find a single item that is closest to the target value
+          // and then fill with smaller items if possible.
+          let bestSingleProduct = null;
+          for (const product of sortedProducts) {
+              if (product.price <= targetValue) {
+                  if (!bestSingleProduct || (targetValue - product.price < targetValue - bestSingleProduct.price)) {
+                      bestSingleProduct = product;
+                  }
+              }
           }
-        }
 
-        if (bestSingleProduct) {
-            selectedItems.push(bestSingleProduct);
-            currentSum = bestSingleProduct.price;
+          if (bestSingleProduct) {
+              selectedItems.push(bestSingleProduct);
+              currentSum = bestSingleProduct.price;
 
-            // If we have room, try to add more smaller items
-            for (const product of sortedProducts) {
-                if (selectedItems.length < MAX_ITEMS && product.price <= (targetValue - currentSum) && !selectedItems.includes(product)) {
-                    selectedItems.push(product);
-                    currentSum += product.price;
-                }
-            }
-        }
+              // Try to add more distinct smaller items to fill up to MAX_ITEMS
+              for (const product of sortedProducts) {
+                  if (selectedItems.length < MAX_ITEMS && product.price <= (targetValue - currentSum) && !selectedItems.includes(product)) {
+                      selectedItems.push(product);
+                      currentSum += product.price;
+                  }
+              }
+          }
       }
 
-      // Final check: if still empty, or sum is very low, just get the largest item that fits
+      // Final fallback: if still no items (or a very poor selection), just get the largest single item that fits
       if (selectedItems.length === 0 && sortedProducts.length > 0) {
         for (const product of sortedProducts) {
             if (product.price <= targetValue) {
                 selectedItems.push(product);
-                currentSum = product.price;
                 break; // Take the largest single item that fits
             }
         }
       }
       
-      // If after all attempts, no products fit, return empty
-      return selectedItems;
+      // Ensure prices are converted to floats if they somehow got messed up
+      return selectedItems.map(item => ({ ...item, price: parseFloat(item.price) }));
     }
 
     /**
@@ -913,8 +937,8 @@
       const pop = document.createElement('div');
       pop.className = 'pop';
 
-      const total = items.reduce((sum, item) => sum + item.price, 0).toFixed(2);
-      const remaining = (value - total).toFixed(2);
+      const total = items.reduce((sum, item) => sum + item.price, 0);
+      const remaining = value - total;
 
       const headlineText = items.length > 1 ?
         'Get all these products FREE!' :
@@ -932,7 +956,6 @@
               <div class="product-img">
                 ${imgHTML}
               </div>
-              <div class="product-name">${item.name}</div>
               <div class="product-price">RM${item.price.toFixed(2)}</div>
             </div>
           `;
@@ -943,7 +966,6 @@
             <div class="product-img">
               <div class="placeholder-icon"><i class="fas fa-box-open"></i></div>
             </div>
-            <div class="product-name">No suitable products found for this S-Coin value.</div>
             <div class="product-price">RM0.00</div>
           </div>
         `;
@@ -951,8 +973,8 @@
       
       pop.innerHTML = `
         <div class="pop-header">
-          <h2>RM${value.toFixed(2)} S-Coin Value</h2>
           <div class="headline">${headlineText}</div>
+          <h2>RM${value.toFixed(2)} S-Coin Value</h2>
         </div>
         
         <div class="product-container">
@@ -963,10 +985,10 @@
         
         <div class="pop-footer">
           ${items.length > 0 ? `
-            <div class="total">Total Value: RM${total}</div>
+            <div class="total">Total Value: RM${total.toFixed(2)}</div>
             <div class="disclaimer">
               *Actual products may vary. Items shown are suggestions.
-              T&C apply. Remaining balance: RM${remaining}
+              T&C apply. Remaining balance: RM${remaining.toFixed(2)}
             </div>
           ` : `<div class="disclaimer">No products could be allocated for this S-Coin value.</div>`}
         </div>
