@@ -12,8 +12,8 @@
       --primary: #4361ee;
       --secondary: #f72585;
       --accent: #4cc9f0;
-      --card-width: 350px;         /* Make card bigger */
-      --card-height: 500px;        /* Taller for print visibility, about A6 ratio */
+      --card-width: 350px;
+      --card-height: 500px;
       --shadow: 0 10px 32px rgba(67, 97, 238, 0.16);
       --headline-font: 2.2rem;
       --headline-shadow: 0 2px 8px rgba(67,97,238,.1);
@@ -91,23 +91,28 @@
     }
     .pop-card-products {
       display: flex;
-      flex-direction: row;
       justify-content: center;
-      align-items: flex-end;
-      gap: 0;
+      align-items: center;
       min-height: 180px;
-      flex: 1 1 auto;
       position: relative;
-      margin-bottom: 16px;
+      width: 100%;
+      margin-bottom: 18px;
+      gap: 0;
     }
     .product-img-wrap {
-      position: relative;
-      width: 140px;
-      height: 140px;
-      margin: 0 -36px;
-      z-index: 1;
-      transition: box-shadow .2s;
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      transition: box-shadow .2s, left .25s, top .25s;
+      top: 25px;
     }
+    .product-img-wrap { left: 50%; transform: translateX(-50%) scale(1) rotate(0deg);}
+    .pop-card-products.one .product-img-wrap:nth-child(1) { left: 50%; transform: translateX(-50%) scale(1.08) rotate(-4deg); z-index: 3;}
+    .pop-card-products.two .product-img-wrap:nth-child(1) { left: 42%; transform: translateX(-50%) rotate(-9deg); z-index: 2;}
+    .pop-card-products.two .product-img-wrap:nth-child(2) { left: 58%; transform: translateX(-50%) rotate(9deg); z-index: 3;}
+    .pop-card-products.three .product-img-wrap:nth-child(1) { left: 36%; transform: translateX(-50%) rotate(-13deg); z-index: 1;}
+    .pop-card-products.three .product-img-wrap:nth-child(2) { left: 50%; transform: translateX(-50%) scale(1.08) rotate(0deg); z-index:3;}
+    .pop-card-products.three .product-img-wrap:nth-child(3) { left: 64%; transform: translateX(-50%) rotate(13deg); z-index: 2;}
     .product-img-wrap img, .product-img-wrap .placeholder-icon {
       width: 100%;
       height: 100%;
@@ -131,15 +136,6 @@
       z-index: 5;
       box-shadow: 0 1px 5px rgba(247, 37, 133, 0.23);
     }
-    /* Overlap effect for products */
-    .product-img-wrap { transition: transform .2s; }
-    .pop-card-products .product-img-wrap:nth-child(1) { z-index:3; transform: rotate(-8deg) translateX(0); }
-    .pop-card-products .product-img-wrap:nth-child(2) { z-index:2; transform: rotate(7deg) translateX(-40px); }
-    .pop-card-products .product-img-wrap:nth-child(3) { z-index:1; transform: rotate(14deg) translateX(-80px); }
-    .pop-card-products.one .product-img-wrap { margin: 0 auto; transform: none; }
-    .pop-card-products.two .product-img-wrap:nth-child(1) { transform: rotate(-6deg) translateX(16px);}
-    .pop-card-products.two .product-img-wrap:nth-child(2) { transform: rotate(6deg) translateX(-16px);}
-    .pop-card-products.three .product-img-wrap { /* already styled for 3 */ }
     .pop-card-footer {
       text-align: center;
       padding: 12px 18px 22px 18px;
@@ -372,34 +368,29 @@ function generatePOP() {
   });
 }
 
-// Random product selector
+// Random product selector (returns up to 3 products, all fit within budget, random order)
 function getRandomProducts(budget) {
-  // Shuffle products
   const products = productList.slice().sort(() => Math.random() - 0.5);
-  let picked = [];
-  let tries = 20, found = false, result = [];
-  // Try multiple times for a nice random combo
-  while (tries--) {
-    let tmp = [], total = 0;
-    // Up to 3 items, each under budget, none repeated
+  let bestCombo = [], bestTotal = 0;
+  for (let t = 0; t < 25; t++) { // Try up to 25 shuffles for better randomness
+    let combo = [], total = 0;
     for (let prod of products) {
-      if (tmp.length >= 3) break;
-      if (prod.price + total <= budget) {
-        tmp.push(prod);
+      if (combo.length < 3 && prod.price + total <= budget && !combo.includes(prod)) {
+        combo.push(prod);
         total += prod.price;
       }
     }
-    if (tmp.length > 0 && total > 0) {
-      // Save if best combo for now
-      if (tmp.length > picked.length || (tmp.length === picked.length && total > picked.reduce((a,b)=>a+b.price,0))) {
-        picked = tmp;
-        if (picked.length === 3) break;
-      }
+    if (
+      (combo.length > bestCombo.length) ||
+      (combo.length === bestCombo.length && total > bestTotal)
+    ) {
+      bestCombo = combo.slice();
+      bestTotal = total;
+      if (combo.length === 3) break;
     }
-    // shuffle for next try
-    products.sort(() => Math.random() - 0.5);
+    products.sort(() => Math.random() - 0.5); // reshuffle for next try
   }
-  return picked;
+  return bestCombo;
 }
 
 // Clear
