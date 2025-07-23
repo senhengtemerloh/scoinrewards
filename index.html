@@ -16,6 +16,7 @@
       --card-height: 350px;
       --shadow: 0 10px 32px rgba(67, 97, 238, 0.10);
       --headline-font: 1.55rem;
+      --card-border: 2.5px dashed #ccccde;
     }
     body {
       font-family: 'Poppins', sans-serif;
@@ -62,19 +63,22 @@
       justify-content: flex-start;
       align-items: center;
       padding: 0;
+      border: var(--card-border);
+      /* For print clarity */
+      box-sizing: border-box;
     }
     .pop-card-header {
-      padding: 13px 10px 4px 10px;
+      padding: 13px 10px 0px 10px;
       text-align: center;
       flex-shrink: 0;
       width: 100%;
     }
     .s-coin-value {
-      font-size: 1.05rem;
+      font-size: 1.04rem;
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       letter-spacing: 1px;
     }
     .headline {
@@ -82,12 +86,12 @@
       font-family: 'Montserrat', sans-serif;
       font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 1.4px;
+      letter-spacing: 1.2px;
       background: linear-gradient(90deg, var(--secondary), var(--primary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin: 0 auto 2px auto;
-      padding: 2px 0 0 0;
+      margin: 0 auto 1px auto;
+      padding: 0;
       width: 100%;
       line-height: 1.13;
       display: block;
@@ -98,50 +102,52 @@
       align-items: flex-end;
       flex: 1 0 auto;
       width: 100%;
-      min-height: 130px;
-      margin-bottom: 7px;
-      margin-top: 5px;
+      min-height: 124px;
+      margin-bottom: 5px;
+      margin-top: 2px;
       position: relative;
-      gap: 0;
       overflow: hidden;
+      /* Key: remove extra vertical space above/below! */
     }
-    /* 1 Product */
+    /* 1 Product: max size */
     .pop-card-products.one .product-img-wrap {
-      margin: 0 0;
-      width: 200px;
-      height: 200px;
+      margin: 0;
+      width: 190px; height: 190px;
       transform: rotate(0deg);
       z-index: 2;
     }
-    /* 2 Products */
-    .pop-card-products.two .product-img-wrap {
-      width: 160px;
-      height: 160px;
-      margin: 0 18px;
+    /* 2 Products: close, slight tilt */
+    .pop-card-products.two {
+      gap: 2vw !important;
     }
-    .pop-card-products.two .product-img-wrap:nth-child(1) { /* left */
+    .pop-card-products.two .product-img-wrap {
+      width: 135px; height: 135px;
+    }
+    .pop-card-products.two .product-img-wrap:nth-child(1) {
       transform: rotate(-4deg);
       z-index: 2;
     }
-    .pop-card-products.two .product-img-wrap:nth-child(2) { /* right */
+    .pop-card-products.two .product-img-wrap:nth-child(2) {
       transform: rotate(4deg);
       z-index: 2;
     }
-    /* 3 Products */
-    .pop-card-products.three .product-img-wrap {
-      width: 130px;
-      height: 130px;
-      margin: 0 8px;
+    /* 3 Products: close, slight tilt */
+    .pop-card-products.three {
+      gap: 1vw !important;
     }
-    .pop-card-products.three .product-img-wrap:nth-child(1) { /* left */
+    .pop-card-products.three .product-img-wrap {
+      width: 105px; height: 105px;
+      margin: 0;
+    }
+    .pop-card-products.three .product-img-wrap:nth-child(1) {
       transform: rotate(-4deg);
       z-index: 1;
     }
-    .pop-card-products.three .product-img-wrap:nth-child(2) { /* center */
+    .pop-card-products.three .product-img-wrap:nth-child(2) {
       transform: rotate(0deg);
       z-index: 2;
     }
-    .pop-card-products.three .product-img-wrap:nth-child(3) { /* right */
+    .pop-card-products.three .product-img-wrap:nth-child(3) {
       transform: rotate(4deg);
       z-index: 1;
     }
@@ -172,23 +178,24 @@
       background: var(--secondary);
       color: #fff;
       font-weight: 700;
-      font-size: .93rem;
-      padding: 3px 10px;
+      font-size: .87rem;
+      padding: 2.5px 9px;
       border-radius: 10px;
       z-index: 5;
       box-shadow: 0 1px 5px rgba(247, 37, 133, 0.15);
     }
     .pop-card-footer {
       text-align: center;
-      padding: 4px 14px 10px 14px;
+      padding: 1px 8px 7px 8px;
       width: 100%;
     }
     .total-value { display: none !important; }
     .disclaimer {
-      font-size: 0.87rem;
-      color: #9aa5b8;
-      line-height: 1.23;
+      font-size: 0.72rem;
+      color: #a7adcc;
+      line-height: 1.18;
       margin-top: 0;
+      letter-spacing: 0.01em;
     }
     @media print {
       body {
