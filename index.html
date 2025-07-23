@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=700, initial-scale=1.0">
   <title>S-Coin POP Generator</title>
   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,46 +12,45 @@
       --primary: #4361ee;
       --secondary: #f72585;
       --accent: #4cc9f0;
-      --card-width: 350px;
-      --card-height: 500px;
-      --shadow: 0 10px 32px rgba(67, 97, 238, 0.16);
-      --headline-font: 2.2rem;
-      --headline-shadow: 0 2px 8px rgba(67,97,238,.1);
+      --card-width: 500px;
+      --card-height: 320px;
+      --shadow: 0 10px 32px rgba(67, 97, 238, 0.14);
+      --headline-font: 1.7rem;
     }
     body {
       font-family: 'Poppins', sans-serif;
       background: #f8f9ff;
-      padding: 30px;
+      padding: 20px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
     .container {
-      max-width: 1200px;
+      max-width: 1500px;
       margin: 0 auto;
       width: 100%;
     }
     .input-section, .instructions, footer {
       background: #fff;
       border-radius: 20px;
-      padding: 24px 32px;
-      margin-bottom: 30px;
+      padding: 18px 24px;
+      margin-bottom: 20px;
       box-shadow: var(--shadow);
     }
     .pop-preview {
       display: flex;
       flex-wrap: wrap;
-      gap: 24px;
-      margin: 24px 0 0 0;
+      gap: 28px;
+      margin: 20px 0 0 0;
       justify-content: center;
       align-items: center;
     }
     .pop-card {
       width: var(--card-width);
       height: var(--card-height);
-      background: linear-gradient(130deg, #fff 65%, #f2f5ff 100%);
-      border-radius: 24px;
+      background: linear-gradient(120deg, #fff 65%, #f2f5ff 100%);
+      border-radius: 20px;
       box-shadow: var(--shadow);
       overflow: hidden;
       display: flex;
@@ -60,44 +59,50 @@
       margin: 0 auto;
       page-break-inside: avoid;
       break-inside: avoid;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0;
     }
     .pop-card-header {
-      padding: 24px 12px 12px 12px;
+      padding: 15px 10px 5px 10px;
       text-align: center;
       flex-shrink: 0;
+      width: 100%;
     }
     .s-coin-value {
-      font-size: 1.2rem;
+      font-size: 1.06rem;
       font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--primary);
-      margin-bottom: 12px;
+      margin-bottom: 7px;
+      letter-spacing: 1px;
     }
     .headline {
       font-size: var(--headline-font);
       font-family: 'Montserrat', sans-serif;
       font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       background: linear-gradient(90deg, var(--secondary), var(--primary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin: 0 auto 18px auto;
-      padding: 10px 0;
+      margin: 0 auto 6px auto;
+      padding: 3px 0 0 0;
       width: 100%;
-      text-shadow: var(--headline-shadow);
-      line-height: 1.15;
+      line-height: 1.18;
       display: block;
     }
-    /* ----- FAN-OUT STYLE FOR PRODUCTS ----- */
+    /* --- WIDE PRODUCT ROW --- */
     .pop-card-products {
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      min-height: 160px;
-      position: relative;
+      flex: 1 0 auto;
       width: 100%;
-      margin-bottom: 18px;
+      min-height: 150px;
+      margin-bottom: 8px;
+      margin-top: 7px;
+      position: relative;
       gap: 0;
     }
     .product-img-wrap {
@@ -105,57 +110,56 @@
       align-items: center;
       justify-content: center;
       background: #fff;
-      border-radius: 18px;
+      border-radius: 13px;
       position: relative;
       box-shadow: 0 2px 10px rgba(67,97,238,0.08);
       border: 2px solid #e0e4ff;
       margin-left: -35px;
       margin-right: -35px;
-      transition: box-shadow .2s, transform .22s;
+      transition: box-shadow .2s, transform .18s;
     }
-    /* Always overlap by negative margin (like a fan) */
     .pop-card-products.one .product-img-wrap {
       margin: 0;
-      width: 130px;
-      height: 130px;
+      width: 135px;
+      height: 135px;
       transform: scale(1.08) rotate(-4deg);
       z-index: 2;
     }
     .pop-card-products.two .product-img-wrap:nth-child(1) {
       width: 110px;
       height: 110px;
-      transform: rotate(-9deg) translateY(10px);
+      transform: rotate(-11deg) translateY(7px);
       z-index: 1;
     }
     .pop-card-products.two .product-img-wrap:nth-child(2) {
-      width: 130px;
-      height: 130px;
-      transform: rotate(9deg) translateY(0px);
+      width: 135px;
+      height: 135px;
+      transform: rotate(10deg) translateY(0px);
       z-index: 2;
     }
     .pop-card-products.three .product-img-wrap:nth-child(1) {
       width: 110px;
       height: 110px;
-      transform: rotate(-13deg) translateY(17px);
+      transform: rotate(-16deg) translateY(22px);
       z-index: 1;
     }
     .pop-card-products.three .product-img-wrap:nth-child(2) {
-      width: 140px;
-      height: 140px;
-      transform: scale(1.04) rotate(0deg) translateY(0);
-      z-index: 2;
+      width: 150px;
+      height: 150px;
+      transform: scale(1.07) rotate(0deg) translateY(0);
+      z-index: 3;
     }
     .pop-card-products.three .product-img-wrap:nth-child(3) {
       width: 110px;
       height: 110px;
-      transform: rotate(13deg) translateY(17px);
-      z-index: 1;
+      transform: rotate(16deg) translateY(22px);
+      z-index: 2;
     }
     .product-img-wrap img, .product-img-wrap .placeholder-icon {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      border-radius: 12px;
+      border-radius: 10px;
       background: #f8f9ff;
       display: block;
     }
@@ -166,29 +170,30 @@
       background: var(--secondary);
       color: #fff;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: .98rem;
       padding: 3px 10px;
       border-radius: 12px;
       z-index: 5;
-      box-shadow: 0 1px 5px rgba(247, 37, 133, 0.23);
+      box-shadow: 0 1px 5px rgba(247, 37, 133, 0.19);
     }
     .pop-card-footer {
       text-align: center;
-      padding: 12px 18px 22px 18px;
+      padding: 4px 14px 12px 14px;
+      width: 100%;
     }
     .total-value {
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.12rem;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       display: block;
     }
     .disclaimer {
-      font-size: 0.93rem;
+      font-size: 0.89rem;
       color: #9aa5b8;
-      line-height: 1.3;
-      margin-top: 4px;
+      line-height: 1.23;
+      margin-top: 0;
     }
     /* A4 print styles (4 cards) */
     @media print {
@@ -212,7 +217,7 @@
         float: left;
         box-shadow: none !important;
         width: 49vw !important;
-        height: 49vh !important;
+        height: 37vh !important;
         border-radius: 0 !important;
       }
       html, body { padding:0; margin:0; }
