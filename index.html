@@ -66,11 +66,11 @@
       box-sizing: border-box;
     }
     .pop-card-header {
-      padding: 10px 8px 0 8px;
-      text-align: center;
-      width: 100%;
-      flex-shrink: 0;
-    }
+  padding: 10px 8px 0 8px;
+  text-align: center;
+  width: 100%;
+  flex-shrink: 0;
+}
     .s-coin-value {
       font-size: 1.01rem;
       font-family: 'Montserrat', sans-serif;
@@ -80,32 +80,31 @@
       letter-spacing: 1px;
     }
     .headline {
-      font-size: var(--headline-font);
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1.1px;
-      background: linear-gradient(90deg, var(--secondary), var(--primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 0 auto 0px auto;
-      padding: 0;
-      width: 100%;
-      line-height: 1.11;
-      display: block;
-    }
+  font-size: var(--headline-font);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.1px;
+  background: linear-gradient(90deg, var(--secondary), var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 5px auto 4px auto; /* Add top, reduce bottom margin */
+  padding: 0;
+  width: 100%;
+  line-height: 1.13;
+  display: block;
+}
     .pop-card-products {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      width: 100%;
-      min-height: 110px;
-      margin: 5px 0 0 0;
-      padding: 0;
-      position: relative;
-      flex: 1 1 auto;
-      /* remove excess vertical spacing */
-    }
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  min-height: 110px;
+  margin: 0 0 0 0;   /* REMOVE top margin */
+  padding: 0;
+  position: relative;
+  flex: 1 1 auto;
+}
     /* 1 Product: biggest size, center */
     .pop-card-products.one .product-img-wrap {
       width: 165px; height: 165px; margin: 0;
@@ -183,21 +182,20 @@
       box-shadow: 0 1px 5px rgba(247, 37, 133, 0.13);
     }
     .pop-card-footer {
-      text-align: center;
-      padding: 2px 6px 7px 6px;
-      width: 100%;
-      margin: 0;
-    }
+  text-align: center;
+  padding: 2px 6px 10px 6px; /* Add more bottom padding */
+  width: 100%;
+  margin: 0;
+}
     .total-value { display: none !important; }
     .disclaimer {
-      font-size: 0.66rem;
-      color: #a7adcc;
-      line-height: 1.11;
-      margin-top: 2px;
-      letter-spacing: 0.01em;
-      margin-bottom: 0;
-      width: 100%;
-    }
+  font-size: 0.66rem;
+  color: #a7adcc;
+  line-height: 1.15;
+  margin-top: 12px;  /* More space above disclaimer */
+  margin-bottom: 0;
+  width: 100%;
+}
     @media print {
       body {
         background: #fff;
