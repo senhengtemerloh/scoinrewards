@@ -82,6 +82,7 @@
       background: linear-gradient(to right, var(--primary), #3a56d5);
       position: relative;
       overflow: hidden;
+      z-index: 5;
     }
     .pop-card-header::before {
       content: '';
@@ -126,12 +127,14 @@
       padding: 0;
       position: relative;
       background: radial-gradient(circle at center, rgba(243, 246, 255, 0.6) 0%, rgba(230, 235, 255, 0.8) 100%);
+      overflow: hidden;
     }
     .pop-card-footer {
       width: 100%;
       text-align: center;
       padding: 0 8px 14px 8px;
       flex-shrink: 0;
+      z-index: 5;
     }
     .disclaimer {
       font-size: 0.68rem;
@@ -140,7 +143,7 @@
       margin: 12px 0 0 0;
       width: 100%;
     }
-    /* Improved product layouts with better spacing */
+    /* Optimized product layouts for better spacing */
     .pop-card-products.one .product-img-wrap {
       width: 220px;
       height: 220px;
@@ -155,10 +158,11 @@
       height: 160px;
     }
     .pop-card-products.three {
-      gap: 8px !important;
+      gap: 5px !important;
       flex-wrap: wrap;
       align-content: center;
       justify-content: center;
+      padding: 10px 0;
     }
     .pop-card-products.three .product-img-wrap {
       width: 140px;
@@ -274,6 +278,9 @@
       .pop-card-products.three .product-img-wrap {
         width: 120px; 
         height: 120px;
+      }
+      .pop-card-products.three {
+        padding: 5px 0;
       }
     }
     @media (max-width: 500px) {
@@ -439,23 +446,6 @@
       display: inline-block;
       font-family: 'Montserrat', sans-serif;
     }
-    .card-counter {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: var(--secondary);
-      color: white;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 0.9rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 10;
-    }
     .card-glow {
       position: absolute;
       top: 0;
@@ -471,6 +461,31 @@
     .pop-card:hover .card-glow {
       opacity: 1;
     }
+    .preview-placeholder {
+      color: #8d99ae;
+      opacity: .8;
+      padding: 36px 24px;
+      text-align: center; 
+      background: rgba(255,255,255,0.7); 
+      border-radius: 18px; 
+      margin-top: 20px; 
+      border: 2px dashed #e0e4ff;
+    }
+    .preview-placeholder i {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      display: block;
+      color: var(--gold);
+    }
+    .preview-placeholder b {
+      font-size: 1.3rem; 
+      color: #4a5568;
+    }
+    .preview-placeholder div {
+      margin-top: 12px;
+      font-size: 1.1rem; 
+      color: #718096;
+    }
   </style>
 </head>
 <body>
@@ -481,7 +496,7 @@
         Create professional Point of Purchase cards for S-Coin promotions that grab customer attention
       </p>
       <p style="text-align: center; margin-top: 15px; font-size: 1rem; background: rgba(255, 215, 0, 0.15); padding: 12px; border-radius: 12px; border-left: 4px solid var(--gold); max-width: 800px; margin: 20px auto;">
-        <i class="fas fa-star" style="color: var(--gold);"></i> <strong>New Feature:</strong> Each product now displays its <span class="gold-highlight">S-Coin Value</span> with larger images and improved layouts!
+        <i class="fas fa-star" style="color: var(--gold);"></i> <strong>New Feature:</strong> Each product now displays its <span class="gold-highlight">S-Coin Value</span> with larger images and optimized layouts!
       </p>
     </header>
 
@@ -527,16 +542,16 @@
         <li>Click "Generate POP Cards" to preview printable cards</li>
         <li>Click "Print A4" for perfect 4-up printing per page</li>
         <li><strong>New:</strong> Each product shows its <span class="gold-highlight">S-Coin Value</span> in a gold bar</li>
-        <li>Improved layouts for multiple products with larger images</li>
+        <li>Optimized layouts for multiple products with larger images</li>
         <li>Hover over cards to see interactive effects</li>
       </ul>
     </section>
 
     <div class="pop-preview" id="popGrid">
-      <div style="color:#8d99ae;opacity:.8;padding:36px 24px;text-align:center; background: rgba(255,255,255,0.7); border-radius: 18px; margin-top: 20px; border: 2px dashed #e0e4ff;">
-        <i class="fas fa-coins" style="font-size:3rem;margin-bottom:16px;display:block; color: var(--gold);"></i>
-        <b style="font-size:1.3rem; color: #4a5568;">No POP Cards Generated Yet</b>
-        <div style="margin-top:12px;font-size:1.1rem; color: #718096;">Enter S-Coin values and click "Generate POP Cards"</div>
+      <div class="preview-placeholder">
+        <i class="fas fa-coins"></i>
+        <b>No POP Cards Generated Yet</b>
+        <div>Enter S-Coin values and click "Generate POP Cards"</div>
       </div>
     </div>
 
@@ -548,7 +563,6 @@
 let productList = [];
 let excelLoaded = false;
 let usedProductsPerValue = {};
-let cardCounter = 1;
 
 const dataStatus = document.getElementById('dataStatus');
 const popGrid = document.getElementById('popGrid');
@@ -612,7 +626,6 @@ function generatePOP() {
     return;
   }
   popGrid.innerHTML = '';
-  cardCounter = 1;
 
   // Get S-Coin values (max 4)
   const values = [
@@ -624,10 +637,10 @@ function generatePOP() {
 
   if (values.length === 0) {
     popGrid.innerHTML = `
-      <div style="color:#8d99ae;opacity:.8;padding:36px 24px;text-align:center; background: rgba(255,255,255,0.7); border-radius: 18px; margin-top: 20px; border: 2px dashed #e0e4ff;">
-        <i class="fas fa-coins" style="font-size:3rem;margin-bottom:16px;display:block; color: var(--gold);"></i>
-        <b style="font-size:1.3rem; color: #4a5568;">No POP Cards Generated Yet</b>
-        <div style="margin-top:12px;font-size:1.1rem; color: #718096;">Enter S-Coin values and click "Generate POP Cards"</div>
+      <div class="preview-placeholder">
+        <i class="fas fa-coins"></i>
+        <b>No POP Cards Generated Yet</b>
+        <div>Enter S-Coin values and click "Generate POP Cards"</div>
       </div>
     `;
     return;
@@ -716,7 +729,6 @@ function generatePOP() {
     card.className = 'pop-card';
     card.innerHTML = `
       <div class="card-glow"></div>
-      <div class="card-counter">${cardCounter++}</div>
       <div class="pop-card-header">
         <div class="s-coin-value">RM <span style="font-weight:900">${val}</span> S-COIN VALUE</div>
         <div class="headline">${headlineText}</div>
@@ -740,10 +752,10 @@ function clearAll() {
   document.getElementById('val3').value = '';
   document.getElementById('val4').value = '';
   popGrid.innerHTML = `
-    <div style="color:#8d99ae;opacity:.8;padding:36px 24px;text-align:center; background: rgba(255,255,255,0.7); border-radius: 18px; margin-top: 20px; border: 2px dashed #e0e4ff;">
-      <i class="fas fa-coins" style="font-size:3rem;margin-bottom:16px;display:block; color: var(--gold);"></i>
-      <b style="font-size:1.3rem; color: #4a5568;">No POP Cards Generated Yet</b>
-      <div style="margin-top:12px;font-size:1.1rem; color: #718096;">Enter S-Coin values and click "Generate POP Cards"</div>
+    <div class="preview-placeholder">
+      <i class="fas fa-coins"></i>
+      <b>No POP Cards Generated Yet</b>
+      <div>Enter S-Coin values and click "Generate POP Cards"</div>
     </div>
   `;
   // Also reset the used products tracking
