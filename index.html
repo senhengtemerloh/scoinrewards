@@ -12,10 +12,12 @@
       --primary: #4361ee;
       --secondary: #f72585;
       --accent: #4cc9f0;
-      --card-size: 360px;
+      --card-size: 380px;
       --shadow: 0 8px 30px rgba(67, 97, 238, 0.10);
       --headline-font: 1.45rem;
       --border-cut: 2.5px solid #b2b8cf;
+      --gold: #FFD700;
+      --gold-dark: #D4AF37;
     }
     body {
       font-family: 'Poppins', sans-serif;
@@ -67,7 +69,7 @@
     .pop-card-header {
       width: 100%;
       text-align: center;
-      padding: 14px 8px 4px 8px; /* Reduced padding */
+      padding: 14px 8px 4px 8px;
       flex-shrink: 0;
     }
     .s-coin-value {
@@ -76,7 +78,7 @@
       font-weight: 700;
       color: var(--primary);
       letter-spacing: 1px;
-      margin-bottom: 0; /* Reduced margin */
+      margin-bottom: 0;
     }
     .headline {
       font-size: var(--headline-font);
@@ -87,7 +89,7 @@
       background: linear-gradient(90deg, var(--secondary), var(--primary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin: 4px auto 0px auto; /* Reduced top margin */
+      margin: 4px auto 0px auto;
       padding: 0;
       width: 100%;
       line-height: 1.11;
@@ -96,7 +98,7 @@
     .pop-card-products {
       display: flex;
       justify-content: center;
-      align-items: center; /* Changed from flex-end to center */
+      align-items: center;
       width: 100%;
       flex: 1 1 0;
       min-height: 0;
@@ -117,9 +119,10 @@
       margin: 12px 0 0 0;
       width: 100%;
     }
-    /* Increased product image sizes and adjusted positioning */
+    /* Larger product images with S-Coin value display */
     .pop-card-products.one .product-img-wrap {
-      width: 160px; height: 160px; /* Increased size */
+      width: 180px; 
+      height: 180px;
       transform: rotate(0deg);
       z-index: 2;
     }
@@ -127,40 +130,21 @@
       gap: 10px !important;
     }
     .pop-card-products.two .product-img-wrap {
-      width: 115px; height: 115px; /* Increased size */
-    }
-    .pop-card-products.two .product-img-wrap:nth-child(1) {
-      transform: rotate(-5deg);
-      z-index: 2;
-    }
-    .pop-card-products.two .product-img-wrap:nth-child(2) {
-      transform: rotate(5deg);
-      z-index: 2;
+      width: 135px; 
+      height: 135px;
     }
     .pop-card-products.three {
       gap: 0px !important;
     }
     .pop-card-products.three .product-img-wrap {
-      width: 90px; height: 90px; /* Increased size */
+      width: 105px; 
+      height: 105px;
       margin-left: -10px; 
       margin-right: -10px;
     }
-    .pop-card-products.three .product-img-wrap:nth-child(1) {
-      transform: rotate(-5deg);
-      z-index: 1;
-      margin-left: 0;
-    }
-    .pop-card-products.three .product-img-wrap:nth-child(2) {
-      transform: rotate(0deg);
-      z-index: 2;
-    }
-    .pop-card-products.three .product-img-wrap:nth-child(3) {
-      transform: rotate(5deg);
-      z-index: 1;
-      margin-right: 0;
-    }
     .product-img-wrap {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       background: #fff;
@@ -174,7 +158,7 @@
     }
     .product-img-wrap img, .product-img-wrap .placeholder-icon {
       width: 100%;
-      height: 100%;
+      height: 85%;
       object-fit: contain;
       border-radius: 7px;
       background: #f8f9ff;
@@ -192,6 +176,27 @@
       border-radius: 8px;
       z-index: 5;
       box-shadow: 0 1px 5px rgba(247, 37, 133, 0.13);
+    }
+    .scoin-display {
+      width: 100%;
+      height: 15%;
+      background: linear-gradient(to bottom, var(--gold), var(--gold-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 3px 5px;
+      border-radius: 0 0 7px 7px;
+      box-sizing: border-box;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 0.5px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
     .total-value { display: none !important; }
     
@@ -221,9 +226,31 @@
         min-height: 0 !important;
       }
       html, body { padding:0; margin:0; }
+      
+      /* Enhance print appearance */
+      .scoin-display {
+        font-size: 0.7rem;
+        padding: 2px;
+      }
+      .pop-card-products.one .product-img-wrap {
+        width: 160px; 
+        height: 160px;
+      }
+      .pop-card-products.two .product-img-wrap {
+        width: 120px; 
+        height: 120px;
+      }
+      .pop-card-products.three .product-img-wrap {
+        width: 90px; 
+        height: 90px;
+      }
     }
     @media (max-width: 500px) {
       :root { --card-size: 95vw; }
+      .scoin-display {
+        font-size: 0.7rem;
+        padding: 2px;
+      }
     }
     
     /* New UI enhancements */
@@ -343,6 +370,15 @@
       background: #fff2f0;
       color: #ff4d4f;
     }
+    .gold-highlight {
+      background: linear-gradient(to right, var(--gold), var(--gold-dark));
+      color: #000;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: bold;
+      margin: 0 5px;
+      display: inline-block;
+    }
   </style>
 </head>
 <body>
@@ -350,6 +386,9 @@
     <header>
       <h1><i class="fas fa-gem"></i> S-Coin POP Generator</h1>
       <p style="margin-top:10px; text-align: center; color: #4a5568;">Create professional Point of Purchase cards for S-Coin promotions</p>
+      <p style="text-align: center; margin-top: 5px; font-size: 0.95rem; background: rgba(255, 215, 0, 0.15); padding: 8px; border-radius: 10px; border-left: 4px solid var(--gold);">
+        <i class="fas fa-star"></i> New Feature: Each product now displays its <span class="gold-highlight">S-Coin Value</span>!
+      </p>
     </header>
 
     <section class="input-section">
@@ -393,6 +432,8 @@
         <li>Enter up to 4 S-Coin values (e.g., 100, 200, 500) in the input fields</li>
         <li>Click "Generate POP Cards" to preview printable cards</li>
         <li>Click "Print A4" for perfect 4-up printing per page</li>
+        <li><strong>New:</strong> Each product now shows its <span class="gold-highlight">S-Coin Value</span> in a gold bar</li>
+        <li>Images are larger for better visibility when printed</li>
       </ul>
     </section>
 
@@ -411,7 +452,7 @@
 <script>
 let productList = [];
 let excelLoaded = false;
-let usedProductsPerValue = {}; // Track used products per value
+let usedProductsPerValue = {};
 
 const dataStatus = document.getElementById('dataStatus');
 const popGrid = document.getElementById('popGrid');
@@ -428,16 +469,20 @@ function loadExcelData() {
       const workbook = XLSX.read(buffer, { type: 'array' });
       const worksheet = workbook.Sheets[workbook.SheetNames[0]];
       const jsonData = XLSX.utils.sheet_to_json(worksheet);
+      
+      // Updated to include SCOIN value
       productList = jsonData.map(row => ({
         name: row['FULL NAME'] || 'Unknown Product',
         img: row['URL'] || '',
-        price: parseFloat(row['MEMBER']) || 0
+        price: parseFloat(row['MEMBER']) || 0,
+        scoin: row['SCOIN'] ? parseInt(row['SCOIN']) : 0
       }))
       .filter(product =>
         !product.name.toLowerCase().includes('uniq') &&
         !product.name.toLowerCase().includes('amazingthing') &&
         product.price > 0
       );
+      
       dataStatus.innerHTML = `<i class="fas fa-check-circle"></i> Loaded ${productList.length} products from Excel file`;
       dataStatus.className = 'status-message status-success';
       excelLoaded = true;
@@ -445,19 +490,21 @@ function loadExcelData() {
     .catch(error => {
       dataStatus.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error loading Excel data: ${error.message}. Using sample data.`;
       dataStatus.className = 'status-message status-error';
+      
+      // Updated sample data with scoin values
       productList = [
-        { name: 'Premium Rice Cooker', price: 499, img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        { name: 'Smart Portable Fan', price: 299, img: 'https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        { name: 'Stainless Steel Flask', price: 399, img: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        { name: 'Magnetic Power Bank', price: 259, img: 'https://images.unsplash.com/photo-1606220588911-4561c3e1aafa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        { name: 'Wireless Earbuds Pro', price: 199, img: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        { name: 'Smart LED Color Lamp', price: 149, img: 'https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        { name: 'Bluetooth Speaker', price: 199, img: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        { name: 'Electric Toothbrush', price: 299, img: 'https://images.unsplash.com/photo-1606220588911-4561c3e1aafa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        { name: 'Coffee Maker', price: 399, img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        { name: 'Desk Lamp', price: 199, img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        { name: 'Yoga Mat', price: 99, img: 'https://images.unsplash.com/photo-1576675466969-38eeae4b41e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        { name: 'Water Bottle', price: 79, img: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' }
+        { name: 'Premium Rice Cooker', price: 499, img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', scoin: 22900 },
+        { name: 'Smart Portable Fan', price: 299, img: 'https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', scoin: 14500 },
+        { name: 'Stainless Steel Flask', price: 399, img: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', scoin: 18900 },
+        { name: 'Magnetic Power Bank', price: 259, img: 'https://images.unsplash.com/photo-1606220588911-4561c3e1aafa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', scoin: 12500 },
+        { name: 'Wireless Earbuds Pro', price: 199, img: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', scoin: 9900 },
+        { name: 'Smart LED Color Lamp', price: 149, img: 'https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', scoin: 7500 },
+        { name: 'Bluetooth Speaker', price: 199, img: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', scoin: 9900 },
+        { name: 'Electric Toothbrush', price: 299, img: 'https://images.unsplash.com/photo-1606220588911-4561c3e1aafa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', scoin: 14500 },
+        { name: 'Coffee Maker', price: 399, img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', scoin: 18900 },
+        { name: 'Desk Lamp', price: 199, img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', scoin: 9900 },
+        { name: 'Yoga Mat', price: 99, img: 'https://images.unsplash.com/photo-1576675466969-38eeae4b41e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', scoin: 4900 },
+        { name: 'Water Bottle', price: 79, img: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', scoin: 3900 }
       ];
       excelLoaded = true;
     });
@@ -555,7 +602,17 @@ function generatePOP() {
       let imgHtml = item.img ?
         `<img src="${item.img}" alt="${item.name}" onerror="this.onerror=null;this.style.display='none';">`
         : `<div class="placeholder-icon"><i class="fas fa-image"></i></div>`;
-      return `<div class="product-img-wrap"><div class="free-badge">FREE</div>${imgHtml}</div>`;
+        
+      // Format S-Coin value with commas
+      const formattedScoin = item.scoin.toLocaleString('en-US');
+      
+      return `
+        <div class="product-img-wrap">
+          <div class="free-badge">FREE</div>
+          ${imgHtml}
+          <div class="scoin-display">${formattedScoin} S-Coin</div>
+        </div>
+      `;
     }).join('');
 
     const card = document.createElement('div');
