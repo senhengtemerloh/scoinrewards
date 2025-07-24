@@ -411,6 +411,7 @@
 <script>
 let productList = [];
 let excelLoaded = false;
+let usedProductsPerValue = {}; // Track used products per value
 
 const dataStatus = document.getElementById('dataStatus');
 const popGrid = document.getElementById('popGrid');
@@ -450,7 +451,13 @@ function loadExcelData() {
         { name: 'Stainless Steel Flask', price: 399, img: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
         { name: 'Magnetic Power Bank', price: 259, img: 'https://images.unsplash.com/photo-1606220588911-4561c3e1aafa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
         { name: 'Wireless Earbuds Pro', price: 199, img: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        { name: 'Smart LED Color Lamp', price: 149, img: 'https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' }
+        { name: 'Smart LED Color Lamp', price: 149, img: 'https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+        { name: 'Bluetooth Speaker', price: 199, img: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+        { name: 'Electric Toothbrush', price: 299, img: 'https://images.unsplash.com/photo-1606220588911-4561c3e1aafa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+        { name: 'Coffee Maker', price: 399, img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+        { name: 'Desk Lamp', price: 199, img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+        { name: 'Yoga Mat', price: 99, img: 'https://images.unsplash.com/photo-1576675466969-38eeae4b41e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+        { name: 'Water Bottle', price: 79, img: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' }
       ];
       excelLoaded = true;
     });
@@ -482,16 +489,28 @@ function generatePOP() {
     return;
   }
 
+  // Reset used products tracking for new generation
+  usedProductsPerValue = {};
+
   values.slice(0, 4).forEach((val) => {
+    // Track used products for this specific value
+    if (!usedProductsPerValue[val]) usedProductsPerValue[val] = new Set();
+    
     // Decide how many products to show
     let maxItems = 1;
     if (val >= 300) maxItems = 3;
     else if (val >= 111) maxItems = 2;
 
-    // Pick products that maximize S-Coin usage, up to maxItems
+    // Get available products not used for this value
+    let availableProducts = productList.filter(
+      p => !usedProductsPerValue[val].has(p.name)
+    );
+
+    // Find best combination
     let bestCombo = [];
     let bestTotal = 0;
-    let n = productList.length;
+    
+    // Function to try combinations
     function tryCombos(arr, combo=[], sum=0, idx=0) {
       if (combo.length === maxItems) {
         if (sum <= val && sum > bestTotal) {
@@ -508,17 +527,20 @@ function generatePOP() {
         }
       }
     }
-    tryCombos(productList);
+    tryCombos(availableProducts);
 
-    // Fallback: just get most expensive that fits if none found
-    if (bestCombo.length === 0 && productList.length > 0) {
-      for (let prod of productList) {
+    // Fallback to any available products if no combination found
+    if (bestCombo.length === 0 && availableProducts.length > 0) {
+      for (let prod of availableProducts) {
         if (prod.price <= val) {
           bestCombo = [prod];
           break;
         }
       }
     }
+
+    // Mark products as used for this value
+    bestCombo.forEach(item => usedProductsPerValue[val].add(item.name));
 
     let headlineText = "GET THIS FREE!";
     if (bestCombo.length === 2) headlineText = "GET BOTH FREE!";
@@ -568,6 +590,8 @@ function clearAll() {
       <div style="margin-top:8px;font-size:1.03rem;">Enter S-Coin values and click "Generate POP Cards"</div>
     </div>
   `;
+  // Also reset the used products tracking
+  usedProductsPerValue = {};
 }
 </script>
 </body>
