@@ -13,15 +13,16 @@
       --secondary: #f72585;
       --accent: #4cc9f0;
       --card-size: 380px;
-      --shadow: 0 8px 30px rgba(67, 97, 238, 0.10);
+      --shadow: 0 8px 30px rgba(67, 97, 238, 0.15);
       --headline-font: 1.45rem;
       --border-cut: 2.5px solid #b2b8cf;
       --gold: #FFD700;
       --gold-dark: #D4AF37;
+      --card-bg: linear-gradient(135deg, #ffffff 0%, #f3f6ff 100%);
     }
     body {
       font-family: 'Poppins', sans-serif;
-      background: #f8f9ff;
+      background: linear-gradient(135deg, #f8f9ff 0%, #e6e9ff 100%);
       padding: 20px;
       min-height: 100vh;
       display: flex;
@@ -34,11 +35,13 @@
       width: 100%;
     }
     .input-section, .instructions, footer {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 18px;
       padding: 16px 22px;
       margin-bottom: 18px;
       box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
     }
     .pop-preview {
       display: flex;
@@ -51,8 +54,8 @@
     .pop-card {
       width: var(--card-size);
       height: var(--card-size);
-      background: linear-gradient(120deg, #fff 66%, #f3f6ff 100%);
-      border-radius: 14px;
+      background: var(--card-bg);
+      border-radius: 18px;
       box-shadow: var(--shadow);
       overflow: hidden;
       display: flex;
@@ -65,20 +68,38 @@
       padding: 0;
       border: var(--border-cut);
       box-sizing: border-box;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .pop-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(67, 97, 238, 0.25);
     }
     .pop-card-header {
       width: 100%;
       text-align: center;
-      padding: 14px 8px 4px 8px;
+      padding: 14px 8px 8px 8px;
       flex-shrink: 0;
+      background: linear-gradient(to right, var(--primary), #3a56d5);
+      position: relative;
+      overflow: hidden;
+    }
+    .pop-card-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, var(--secondary), var(--accent));
     }
     .s-coin-value {
-      font-size: 0.99rem;
+      font-size: 1.05rem;
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
-      color: var(--primary);
+      color: white;
       letter-spacing: 1px;
       margin-bottom: 0;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
     .headline {
       font-size: var(--headline-font);
@@ -86,14 +107,13 @@
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 1.1px;
-      background: linear-gradient(90deg, var(--secondary), var(--primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 4px auto 0px auto;
+      color: white;
+      margin: 8px auto 0px auto;
       padding: 0;
       width: 100%;
-      line-height: 1.11;
+      line-height: 1.15;
       display: block;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
     .pop-card-products {
       display: flex;
@@ -105,6 +125,7 @@
       margin: 0;
       padding: 0;
       position: relative;
+      background: radial-gradient(circle at center, rgba(243, 246, 255, 0.6) 0%, rgba(230, 235, 255, 0.8) 100%);
     }
     .pop-card-footer {
       width: 100%;
@@ -119,28 +140,30 @@
       margin: 12px 0 0 0;
       width: 100%;
     }
-    /* Larger product images with S-Coin value display */
+    /* Improved product layouts with better spacing */
     .pop-card-products.one .product-img-wrap {
-      width: 180px; 
-      height: 180px;
+      width: 220px;
+      height: 220px;
       transform: rotate(0deg);
       z-index: 2;
     }
     .pop-card-products.two {
-      gap: 10px !important;
+      gap: 15px !important;
     }
     .pop-card-products.two .product-img-wrap {
-      width: 135px; 
-      height: 135px;
+      width: 160px;
+      height: 160px;
     }
     .pop-card-products.three {
-      gap: 0px !important;
+      gap: 8px !important;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
     }
     .pop-card-products.three .product-img-wrap {
-      width: 105px; 
-      height: 105px;
-      margin-left: -10px; 
-      margin-right: -10px;
+      width: 140px;
+      height: 140px;
+      margin: 0 5px;
     }
     .product-img-wrap {
       display: flex;
@@ -148,34 +171,40 @@
       align-items: center;
       justify-content: center;
       background: #fff;
-      border-radius: 10px;
+      border-radius: 12px;
       position: relative;
-      box-shadow: 0 1.5px 7px rgba(67,97,238,0.10);
+      box-shadow: 0 4px 15px rgba(67,97,238,0.15);
       border: 2px solid #e0e4ff;
-      transition: box-shadow .2s, transform .18s;
+      transition: all 0.3s ease;
       overflow: hidden;
       flex-shrink: 0;
+    }
+    .product-img-wrap:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(67,97,238,0.25);
+      z-index: 10;
     }
     .product-img-wrap img, .product-img-wrap .placeholder-icon {
       width: 100%;
       height: 85%;
       object-fit: contain;
-      border-radius: 7px;
+      border-radius: 10px 10px 0 0;
       background: #f8f9ff;
       display: block;
     }
     .product-img-wrap .free-badge {
       position: absolute;
-      top: 7px;
-      left: 7px;
+      top: 10px;
+      left: 10px;
       background: var(--secondary);
       color: #fff;
-      font-weight: 700;
-      font-size: .81rem;
-      padding: 2.5px 9px;
-      border-radius: 8px;
+      font-weight: 800;
+      font-size: .85rem;
+      padding: 3px 12px;
+      border-radius: 20px;
       z-index: 5;
-      box-shadow: 0 1px 5px rgba(247, 37, 133, 0.13);
+      box-shadow: 0 2px 8px rgba(247, 37, 133, 0.3);
+      transform: rotate(-5deg);
     }
     .scoin-display {
       width: 100%;
@@ -185,11 +214,11 @@
       align-items: center;
       justify-content: center;
       color: #000;
-      font-size: 0.85rem;
-      font-weight: 700;
+      font-size: 0.95rem;
+      font-weight: 800;
       text-align: center;
-      padding: 3px 5px;
-      border-radius: 0 0 7px 7px;
+      padding: 5px;
+      border-radius: 0 0 10px 10px;
       box-sizing: border-box;
       overflow: hidden;
       white-space: nowrap;
@@ -197,6 +226,7 @@
       font-family: 'Montserrat', sans-serif;
       letter-spacing: 0.5px;
       border-top: 1px solid rgba(0, 0, 0, 0.1);
+      text-shadow: 0 1px 1px rgba(255,255,255,0.5);
     }
     .total-value { display: none !important; }
     
@@ -224,32 +254,33 @@
         border-radius: 0 !important;
         min-width: 0 !important;
         min-height: 0 !important;
+        transform: none !important;
       }
       html, body { padding:0; margin:0; }
       
       /* Enhance print appearance */
       .scoin-display {
-        font-size: 0.7rem;
-        padding: 2px;
+        font-size: 0.75rem;
+        padding: 3px;
       }
       .pop-card-products.one .product-img-wrap {
-        width: 160px; 
-        height: 160px;
+        width: 180px; 
+        height: 180px;
       }
       .pop-card-products.two .product-img-wrap {
-        width: 120px; 
-        height: 120px;
+        width: 140px; 
+        height: 140px;
       }
       .pop-card-products.three .product-img-wrap {
-        width: 90px; 
-        height: 90px;
+        width: 120px; 
+        height: 120px;
       }
     }
     @media (max-width: 500px) {
       :root { --card-size: 95vw; }
       .scoin-display {
-        font-size: 0.7rem;
-        padding: 2px;
+        font-size: 0.75rem;
+        padding: 3px;
       }
     }
     
@@ -259,6 +290,11 @@
       font-family: 'Montserrat', sans-serif;
       text-align: center;
       margin-bottom: 5px;
+      font-size: 2.2rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     h1 i {
       margin-right: 12px;
@@ -266,64 +302,68 @@
     }
     .input-group {
       flex: 1;
+      min-width: 200px;
     }
     .input-group label {
       display: block;
-      font-weight: 500;
+      font-weight: 600;
       margin-bottom: 8px;
       color: #4a5568;
+      font-size: 0.95rem;
     }
     .input-group input {
       width: 100%;
-      padding: 12px 15px;
+      padding: 14px 15px;
       border: 2px solid #e2e8f0;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 500;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
       transition: all 0.2s;
       box-sizing: border-box;
+      background: #f8f9ff;
     }
     .input-group input:focus {
       border-color: var(--accent);
       outline: none;
-      box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
+      box-shadow: 0 0 0 4px rgba(76, 201, 240, 0.2);
     }
     .btn {
-      padding: 12px 24px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 1rem;
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1.05rem;
       cursor: pointer;
       border: none;
-      transition: all 0.2s;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       gap: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     .btn-primary {
-      background: var(--primary);
+      background: linear-gradient(to right, var(--primary), #3a56d5);
       color: white;
     }
     .btn-secondary {
-      background: #e2e8f0;
+      background: linear-gradient(to right, #e2e8f0, #d5dbe6);
       color: #4a5568;
     }
     .btn-accent {
-      background: var(--accent);
+      background: linear-gradient(to right, var(--accent), #3ab5da);
       color: white;
     }
     .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
     .btn-primary:hover {
-      background: #3251d4;
+      background: linear-gradient(to right, #3251d4, #2a45b8);
     }
     .btn-secondary:hover {
-      background: #d1d9e3;
+      background: linear-gradient(to right, #d1d9e3, #c4cbd6);
     }
     .btn-accent:hover {
-      background: #3ab5da;
+      background: linear-gradient(to right, #3ab5da, #2fa0c2);
     }
     .section-title {
       font-family: 'Montserrat', sans-serif;
@@ -332,17 +372,31 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      font-size: 1.4rem;
     }
     .section-title i {
       font-size: 1.3em;
+      color: var(--secondary);
     }
     .instructions ul {
       padding-left: 20px;
       margin: 15px 0 0 0;
     }
     .instructions li {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       line-height: 1.5;
+      font-size: 1.05rem;
+      position: relative;
+      padding-left: 10px;
+    }
+    .instructions li::before {
+      content: "•";
+      color: var(--accent);
+      font-weight: bold;
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+      font-size: 1.2rem;
     }
     footer p {
       text-align: center;
@@ -351,33 +405,71 @@
       margin: 0;
     }
     .status-message {
-      padding: 12px 15px;
-      border-radius: 10px;
+      padding: 14px 15px;
+      border-radius: 12px;
       font-weight: 500;
       display: flex;
       align-items: center;
       gap: 10px;
+      font-size: 1.05rem;
+      margin: 10px 0;
     }
     .status-loading {
       background: #e6f7ff;
       color: #1890ff;
+      border-left: 4px solid #1890ff;
     }
     .status-success {
       background: #f6ffed;
       color: #52c41a;
+      border-left: 4px solid #52c41a;
     }
     .status-error {
       background: #fff2f0;
       color: #ff4d4f;
+      border-left: 4px solid #ff4d4f;
     }
     .gold-highlight {
       background: linear-gradient(to right, var(--gold), var(--gold-dark));
       color: #000;
-      padding: 4px 10px;
+      padding: 4px 12px;
       border-radius: 20px;
       font-weight: bold;
       margin: 0 5px;
       display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .card-counter {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--secondary);
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+    .card-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      box-shadow: 0 0 30px rgba(76, 201, 240, 0.3);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .pop-card:hover .card-glow {
+      opacity: 1;
     }
   </style>
 </head>
@@ -385,9 +477,11 @@
   <div class="container">
     <header>
       <h1><i class="fas fa-gem"></i> S-Coin POP Generator</h1>
-      <p style="margin-top:10px; text-align: center; color: #4a5568;">Create professional Point of Purchase cards for S-Coin promotions</p>
-      <p style="text-align: center; margin-top: 5px; font-size: 0.95rem; background: rgba(255, 215, 0, 0.15); padding: 8px; border-radius: 10px; border-left: 4px solid var(--gold);">
-        <i class="fas fa-star"></i> New Feature: Each product now displays its <span class="gold-highlight">S-Coin Value</span>!
+      <p style="margin-top:10px; text-align: center; color: #4a5568; font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+        Create professional Point of Purchase cards for S-Coin promotions that grab customer attention
+      </p>
+      <p style="text-align: center; margin-top: 15px; font-size: 1rem; background: rgba(255, 215, 0, 0.15); padding: 12px; border-radius: 12px; border-left: 4px solid var(--gold); max-width: 800px; margin: 20px auto;">
+        <i class="fas fa-star" style="color: var(--gold);"></i> <strong>New Feature:</strong> Each product now displays its <span class="gold-highlight">S-Coin Value</span> with larger images and improved layouts!
       </p>
     </header>
 
@@ -395,7 +489,7 @@
       <div id="dataStatus" class="status-message status-loading">
         <i class="fas fa-spinner fa-spin"></i> Loading product data from Excel file...
       </div>
-      <div class="input-area" style="display:flex;gap:20px;margin:16px 0 10px 0; flex-wrap: wrap;">
+      <div class="input-area" style="display:flex;gap:20px;margin:16px 0 10px 0; flex-wrap: wrap; justify-content: center;">
         <div class="input-group">
           <label for="val1"><i class="fas fa-tag"></i> S-Coin Value 1 (RM)</label>
           <input type="number" id="val1" placeholder="Enter amount" min="0">
@@ -413,7 +507,7 @@
           <input type="number" id="val4" placeholder="Enter amount" min="0">
         </div>
       </div>
-      <div class="buttons" style="display:flex;gap:12px;justify-content:center; flex-wrap: wrap;">
+      <div class="buttons" style="display:flex;gap:15px;justify-content:center; flex-wrap: wrap; margin-top: 20px;">
         <button class="btn btn-primary" onclick="generatePOP()">
           <i class="fas fa-magic"></i> Generate POP Cards
         </button>
@@ -432,16 +526,17 @@
         <li>Enter up to 4 S-Coin values (e.g., 100, 200, 500) in the input fields</li>
         <li>Click "Generate POP Cards" to preview printable cards</li>
         <li>Click "Print A4" for perfect 4-up printing per page</li>
-        <li><strong>New:</strong> Each product now shows its <span class="gold-highlight">S-Coin Value</span> in a gold bar</li>
-        <li>Images are larger for better visibility when printed</li>
+        <li><strong>New:</strong> Each product shows its <span class="gold-highlight">S-Coin Value</span> in a gold bar</li>
+        <li>Improved layouts for multiple products with larger images</li>
+        <li>Hover over cards to see interactive effects</li>
       </ul>
     </section>
 
     <div class="pop-preview" id="popGrid">
-      <div style="color:#8d99ae;opacity:.8;padding:36px 24px;text-align:center;">
-        <i class="fas fa-coins" style="font-size:2.6rem;margin-bottom:16px;display:block;"></i>
-        <b>No POP Cards Generated Yet</b>
-        <div style="margin-top:8px;font-size:1.03rem;">Enter S-Coin values and click "Generate POP Cards"</div>
+      <div style="color:#8d99ae;opacity:.8;padding:36px 24px;text-align:center; background: rgba(255,255,255,0.7); border-radius: 18px; margin-top: 20px; border: 2px dashed #e0e4ff;">
+        <i class="fas fa-coins" style="font-size:3rem;margin-bottom:16px;display:block; color: var(--gold);"></i>
+        <b style="font-size:1.3rem; color: #4a5568;">No POP Cards Generated Yet</b>
+        <div style="margin-top:12px;font-size:1.1rem; color: #718096;">Enter S-Coin values and click "Generate POP Cards"</div>
       </div>
     </div>
 
@@ -453,6 +548,7 @@
 let productList = [];
 let excelLoaded = false;
 let usedProductsPerValue = {};
+let cardCounter = 1;
 
 const dataStatus = document.getElementById('dataStatus');
 const popGrid = document.getElementById('popGrid');
@@ -516,6 +612,7 @@ function generatePOP() {
     return;
   }
   popGrid.innerHTML = '';
+  cardCounter = 1;
 
   // Get S-Coin values (max 4)
   const values = [
@@ -527,10 +624,10 @@ function generatePOP() {
 
   if (values.length === 0) {
     popGrid.innerHTML = `
-      <div style="color:#8d99ae;opacity:.8;padding:36px 24px;text-align:center;">
-        <i class="fas fa-coins" style="font-size:2.6rem;margin-bottom:16px;display:block;"></i>
-        <b>No POP Cards Generated Yet</b>
-        <div style="margin-top:8px;font-size:1.03rem;">Enter S-Coin values and click "Generate POP Cards"</div>
+      <div style="color:#8d99ae;opacity:.8;padding:36px 24px;text-align:center; background: rgba(255,255,255,0.7); border-radius: 18px; margin-top: 20px; border: 2px dashed #e0e4ff;">
+        <i class="fas fa-coins" style="font-size:3rem;margin-bottom:16px;display:block; color: var(--gold);"></i>
+        <b style="font-size:1.3rem; color: #4a5568;">No POP Cards Generated Yet</b>
+        <div style="margin-top:12px;font-size:1.1rem; color: #718096;">Enter S-Coin values and click "Generate POP Cards"</div>
       </div>
     `;
     return;
@@ -618,6 +715,8 @@ function generatePOP() {
     const card = document.createElement('div');
     card.className = 'pop-card';
     card.innerHTML = `
+      <div class="card-glow"></div>
+      <div class="card-counter">${cardCounter++}</div>
       <div class="pop-card-header">
         <div class="s-coin-value">RM <span style="font-weight:900">${val}</span> S-COIN VALUE</div>
         <div class="headline">${headlineText}</div>
@@ -641,10 +740,10 @@ function clearAll() {
   document.getElementById('val3').value = '';
   document.getElementById('val4').value = '';
   popGrid.innerHTML = `
-    <div style="color:#8d99ae;opacity:.8;padding:36px 24px;text-align:center;">
-      <i class="fas fa-coins" style="font-size:2.6rem;margin-bottom:16px;display:block;"></i>
-      <b>No POP Cards Generated Yet</b>
-      <div style="margin-top:8px;font-size:1.03rem;">Enter S-Coin values and click "Generate POP Cards"</div>
+    <div style="color:#8d99ae;opacity:.8;padding:36px 24px;text-align:center; background: rgba(255,255,255,0.7); border-radius: 18px; margin-top: 20px; border: 2px dashed #e0e4ff;">
+      <i class="fas fa-coins" style="font-size:3rem;margin-bottom:16px;display:block; color: var(--gold);"></i>
+      <b style="font-size:1.3rem; color: #4a5568;">No POP Cards Generated Yet</b>
+      <div style="margin-top:12px;font-size:1.1rem; color: #718096;">Enter S-Coin values and click "Generate POP Cards"</div>
     </div>
   `;
   // Also reset the used products tracking
